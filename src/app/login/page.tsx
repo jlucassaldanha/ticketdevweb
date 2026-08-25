@@ -5,49 +5,13 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Field, FieldError } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { toast, Toaster } from '@/components/ui/toast';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { Toaster } from '@/components/ui/toast';
+import useLogin from '@/hooks/useLogin';
 import Link from 'next/link';
-import { Controller, useForm } from 'react-hook-form';
-import z from 'zod';
-
-const formSchema = z.object({
-  username: z.string().min(1, 'Usuário é um campo obrigatório'),
-  password: z.string().min(1, 'Senha é um campo obrigatório')
-})
+import { Controller } from 'react-hook-form';
 
 export default function LoginPage() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: "",
-      password: "",
-    }
-  })
-
-
-  function onSubmit(data: z.infer<typeof formSchema>) {
-    console.log(data)
-    const id = toast.add({ 
-      title: "Dados capturados:",
-      description: ( 
-        <code>{JSON.stringify(data, null, 2)}</code>
-      ),
-      actionProps: {
-        children: "Undo",
-        onClick() {
-          toast.close(id)
-        }
-      }
-    })
-  }
-
-  const handleTestUser = (testUser: string) => {
-    form.reset({
-      username: testUser,
-      password: "SenhaTeste123"
-    })
-  }
+  const { control, isPending, handleSubmit, onSubmit, fillWithTestUser } = useLogin()
 
   return (
     <div className='flex flex-col justify-center items-center h-screen gap-5'>
@@ -60,19 +24,19 @@ export default function LoginPage() {
           <CardTitle>Login</CardTitle>
         </CardHeader>
 
-        <form id='login-form' onSubmit={form.handleSubmit(onSubmit)}>
+        <form id='login-form' onSubmit={handleSubmit(onSubmit)}>
           <CardContent className='max-w-100 flex flex-col gap-3'>
             <Controller 
-              name='username'
-              control={form.control}
+              name='email'
+              control={control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <Label htmlFor='username'>Usuário</Label>
+                  <Label htmlFor='email'>E-mail</Label>
                   <Input 
                     {...field}
-                    id="username" 
+                    id="email" 
                     aria-invalid={fieldState.invalid}
-                    placeholder='Nome de usuário'
+                    placeholder='E-mail'
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -83,7 +47,7 @@ export default function LoginPage() {
 
             <Controller 
               name='password'
-              control={form.control}
+              control={control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <Label htmlFor='password'>Senha</Label>
@@ -104,7 +68,7 @@ export default function LoginPage() {
         </form>
         
         <CardFooter className='flex flex-col gap-2'>
-          <Button className='w-full' type='submit' form='login-form'>Login</Button>
+          <Button className='w-full' type='submit' form='login-form' disabled={isPending} >{!isPending ? 'Entrar' : 'Entrando..'}</Button>
           <div>
             Não possui uma conta?
             <Link className="text-blue-600 font-bold" href={'register'}>{' '}Registrar</Link>
@@ -118,9 +82,9 @@ export default function LoginPage() {
         </CardHeader>
 
         <CardContent className='flex gap-2'>
-          <Button onClick={() => handleTestUser('organizador1@ticketdev.com')}>Organizador</Button>
-          <Button onClick={() => handleTestUser('cliente1@ticketdev.com')}>Cliente</Button>
-          <Button onClick={() => handleTestUser('portaria@ticketdev.com')}>Portaria</Button>
+          <Button onClick={() => fillWithTestUser('organizador1@ticketdev.com')}>Organizador</Button>
+          <Button onClick={() => fillWithTestUser('cliente1@ticketdev.com')}>Cliente</Button>
+          <Button onClick={() => fillWithTestUser('portaria@ticketdev.com')}>Portaria</Button>
         </CardContent>
       </Card>
 
