@@ -12,12 +12,13 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { Controller } from 'react-hook-form';
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const auth = useAuth()
 
   if (auth.token) {
     redirect('/')
   }
+
   const { control, isPending, handleSubmit, onSubmit, fillWithTestUser } = useLogin()
 
   return (
@@ -28,7 +29,7 @@ export default function LoginPage() {
 
       <Card className='flex flex-col items-center justify-center'>
         <CardHeader className='flex justify-center'>
-          <CardTitle>Login</CardTitle>
+          <CardTitle>Registrar</CardTitle>
         </CardHeader>
 
         <form id='login-form' onSubmit={handleSubmit(onSubmit)}>

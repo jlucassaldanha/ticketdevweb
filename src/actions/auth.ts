@@ -3,6 +3,7 @@
 import { User } from '@/contexts/authContext';
 import { apiFetch } from '@/lib/api'
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 export interface LoginApiResponse {
   token: string;
@@ -33,6 +34,8 @@ export async function loginAction(email: string, password: string) {
     })
 
     ;(await cookies()).set('user_data', JSON.stringify(response.user))
+
+    redirect('/')
   } catch (error) {
     console.error(error)
   }
@@ -41,6 +44,8 @@ export async function loginAction(email: string, password: string) {
 export async function logoutAction() {
   (await cookies()).delete('auth_token')
   ;(await cookies()).delete('user_data')
+
+  redirect('/login')
 }
 
 export async function getTokenAndDataAction() {
