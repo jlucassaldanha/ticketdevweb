@@ -1,3 +1,5 @@
+import { cookies } from 'next/headers';
+
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
 export class ApiError extends Error {
@@ -13,7 +15,7 @@ export class ApiError extends Error {
 }
 
 export async function apiFetch<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+  const token = (await cookies()).get('auth_token')?.value
 
   const headers = new Headers(options.headers);
   headers.set('Content-Type', 'application/json');
