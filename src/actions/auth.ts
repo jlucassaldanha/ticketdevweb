@@ -41,6 +41,20 @@ export async function loginAction(email: string, password: string) {
   }
 }
 
+export async function registerAction(name: string, email: string, password: string, role: string) {
+  try {
+    await apiFetch<LoginApiResponse>('/api/auth/register', {
+      method: 'POST',
+      body: JSON.stringify({ name, email, password, role })
+    })
+
+    redirect('/login')
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+
 export async function logoutAction() {
   (await cookies()).delete('auth_token')
   ;(await cookies()).delete('user_data')
@@ -54,6 +68,5 @@ export async function getTokenAndDataAction() {
 
   const user = userStored ? (JSON.parse(userStored) as User) : null;
 
-  return { user, token}
-  
+  return { user, token} 
 }

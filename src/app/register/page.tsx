@@ -5,12 +5,19 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Field, FieldError } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectTrigger, SelectValue, SelectGroup, SelectItem } from '@/components/ui/select';
 import { Toaster } from '@/components/ui/toast';
 import { useAuth } from '@/contexts/authContext';
-import useLogin from '@/hooks/useLogin';
+import useRegister from '@/hooks/useRegister';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { Controller } from 'react-hook-form';
+
+const roleItems = [
+  { label: "Cliente", value: "CONSUMER" },
+  { label: "Organizador", value: "ORGANIZER" },
+  { label: "Portaria", value: "VALIDATOR" }
+]
 
 export default function RegisterPage() {
   const auth = useAuth()
@@ -19,7 +26,7 @@ export default function RegisterPage() {
     redirect('/')
   }
 
-  const { control, isPending, handleSubmit, onSubmit, fillWithTestUser } = useLogin()
+  const { control, isPending, handleSubmit, onSubmit } = useRegister()
 
   return (
     <div className='flex flex-col justify-center items-center h-screen gap-5'>
@@ -32,8 +39,27 @@ export default function RegisterPage() {
           <CardTitle>Registrar</CardTitle>
         </CardHeader>
 
-        <form id='login-form' onSubmit={handleSubmit(onSubmit)}>
+        <form id='register-form' onSubmit={handleSubmit(onSubmit)}>
           <CardContent className='max-w-100 flex flex-col gap-3'>
+            <Controller 
+              name='name'
+              control={control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <Label htmlFor='name'>Nome</Label>
+                  <Input 
+                    {...field}
+                    id="name" 
+                    aria-invalid={fieldState.invalid}
+                    placeholder='Nome'
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+
             <Controller 
               name='email'
               control={control}
@@ -72,28 +98,48 @@ export default function RegisterPage() {
                 </Field>
               )}
             />
+
+            <Controller 
+              name='role'
+              control={control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <Label htmlFor='role'>Tipo de conta</Label>
+                  <Select 
+                    items={roleItems}
+                    name={field.name}
+                    value={field.value}
+                    onValueChange={field.onChange}
+                  >
+                    <SelectTrigger id="role" aria-invalid={fieldState.invalid}>
+                      <SelectValue placeholder="Tipo de conta"/>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {roleItems.map((item) => (
+                          <SelectItem key={item.value} value={item.value}>
+                            {item.label}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
           </CardContent>
         </form>
         
         <CardFooter className='flex flex-col gap-2'>
-          <Button className='w-full' type='submit' form='login-form' disabled={isPending} >{!isPending ? 'Entrar' : 'Entrando..'}</Button>
+          <Button className='w-full' type='submit' form='register-form' disabled={isPending} >{!isPending ? 'Registrar' : 'Registrando..'}</Button>
           <div>
-            Não possui uma conta?
-            <Link className="text-blue-600 font-bold" href={'register'}>{' '}Registrar</Link>
+            Já possui uma conta?
+            <Link className="text-blue-600 font-bold" href={'login'}>{' '}Entrar</Link>
           </div>
         </CardFooter>
-      </Card>
-
-      <Card >
-        <CardHeader className='flex justify-center'>
-          <CardTitle>Acesso rápido de teste</CardTitle>
-        </CardHeader>
-
-        <CardContent className='flex gap-2'>
-          <Button onClick={() => fillWithTestUser('organizador1@ticketdev.com')}>Organizador</Button>
-          <Button onClick={() => fillWithTestUser('cliente1@ticketdev.com')}>Cliente</Button>
-          <Button onClick={() => fillWithTestUser('portaria@ticketdev.com')}>Portaria</Button>
-        </CardContent>
       </Card>
 
       <Toaster />
