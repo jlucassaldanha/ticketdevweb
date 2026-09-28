@@ -1,20 +1,16 @@
 'use client'
 
-import { logoutAction } from '@/actions/auth';
-import { Button } from '@/components/ui/button';
-import { useAuth } from '@/contexts/authContext';
-import { redirect } from 'next/navigation';
+import Hero from '@/components/my-components/Hero';
 
 export default function Home() {
-  const auth = useAuth()
-
-  if (auth.token === undefined || auth.user === null) {
-    redirect('login')
-  }
 
   return (
-    <div>
-      <Button onClick={logoutAction}>Sair</Button>
+    <div className='py-6'>
+      <Hero />
+
+      <div className='bg-secondary p-3'>
+
+      </div>
     </div>
   );
 }
