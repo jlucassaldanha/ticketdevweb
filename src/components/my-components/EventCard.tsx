@@ -5,6 +5,8 @@ import { Badge } from '../ui/badge';
 import Link from 'next/link';
 import { CalendarIcon, MapPinIcon } from 'lucide-react';
 import { Skeleton } from '../ui/skeleton';
+import EventDate from './EventDate';
+import EventLocation from './EventLocation';
 
 export function EventCard({ event }: { event: TicketEvent }) {
   return (
@@ -32,15 +34,11 @@ export function EventCard({ event }: { event: TicketEvent }) {
         </CardContent>
 
         <CardContent className='flex flex-col gap-1'>
-          <div className='flex items-center gap-2'>
-            <CalendarIcon className="h-4 w-4" />
-            <span>{new Date(event.date).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })}</span>
-          </div>
+          <EventDate 
+            date={new Date(event.date).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })} 
+          />
 
-          <div className='flex items-center gap-2'>
-            <MapPinIcon className="h-4 w-4" />
-            <span>{event.location}</span>
-          </div> 
+          <EventLocation location={event.location} />
         </CardContent>
 
         <CardContent className='flex items-center justify-center'>
