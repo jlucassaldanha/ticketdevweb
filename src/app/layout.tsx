@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { getTokenAndDataAction } from '@/actions/auth';
 import AppProvider from './providers';
+import Header from '@/components/my-components/Header';
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
@@ -33,6 +34,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <AppProvider user={user} token={token}>
+          <Header />
           {children}
         </AppProvider>
       </body>

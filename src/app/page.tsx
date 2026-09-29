@@ -1,20 +1,55 @@
 'use client'
 
-import { logoutAction } from '@/actions/auth';
-import { Button } from '@/components/ui/button';
-import { useAuth } from '@/contexts/authContext';
-import { redirect } from 'next/navigation';
+import useListEvents from '@/hooks/useListEvents';
+import SearchCard from '@/components/my-components/SearchCard';
+import { EventCard, EventCardSkeleton } from '@/components/my-components/EventCard';
 
 export default function Home() {
-  const auth = useAuth()
-
-  if (auth.token === undefined || auth.user === null) {
-    redirect('login')
-  }
+  const { isPending, filteredEvents, categoryOptions, control} = useListEvents()
 
   return (
-    <div>
-      <Button onClick={logoutAction}>Sair</Button>
+    <div className='py-6 px-6'>
+      <div className='flex flex-col justify-center items-center gap-5 text-center py-20'>
+        <h1 className='text-5xl font-bold'>
+          Garanta seus ingressos <br />
+          <span>
+            com segurança.
+          </span>
+        </h1>
+      </div>
+
+      <div className='flex flex-col gap-6'>
+        <SearchCard 
+          control={control} 
+          categoryOptions={categoryOptions} 
+        />
+
+        <div className='flex flex-col gap-5'>
+          <span className='font-bold text-lg'>Eventos</span>
+          {isPending && (
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5'>
+              <EventCardSkeleton />
+              <EventCardSkeleton />
+              <EventCardSkeleton />
+              <EventCardSkeleton />
+            </div>
+          )}
+
+          {filteredEvents.length === 0 && !isPending && (
+            <span className='text-gray-500'>Nenhum evento encontrado.</span>
+          )}
+
+          {filteredEvents.length > 0 && (
+            <span className='text-gray-500'>{filteredEvents.length} evento(s) encontrado(s).</span>
+          )}
+          
+          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5'>
+            {filteredEvents.map(event => (
+              <EventCard key={event.id} event={event} />
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
