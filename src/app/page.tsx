@@ -1,9 +1,8 @@
 'use client'
 
-import Hero from '@/components/my-components/Hero';
 import useListEvents from '@/hooks/useListEvents';
 import SearchCard from '@/components/my-components/SearchCard';
-import EventCard from '@/components/my-components/EventCard';
+import { EventCard, EventCardSkeleton } from '@/components/my-components/EventCard';
 
 export default function Home() {
   const { isPending, filteredEvents, categoryOptions, control} = useListEvents()
@@ -27,12 +26,19 @@ export default function Home() {
 
         <div className='flex flex-col gap-5'>
           <span className='font-bold text-lg'>Eventos</span>
-          {filteredEvents.length === 0 && isPending && (
-            <span className='text-gray-500'>Carregando eventos...</span>
+          {isPending && (
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5'>
+              <EventCardSkeleton />
+              <EventCardSkeleton />
+              <EventCardSkeleton />
+              <EventCardSkeleton />
+            </div>
           )}
+
           {filteredEvents.length === 0 && !isPending && (
             <span className='text-gray-500'>Nenhum evento encontrado.</span>
           )}
+
           {filteredEvents.length > 0 && (
             <span className='text-gray-500'>{filteredEvents.length} evento(s) encontrado(s).</span>
           )}

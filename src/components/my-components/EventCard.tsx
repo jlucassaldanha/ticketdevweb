@@ -4,8 +4,9 @@ import Image from 'next/image';
 import { Badge } from '../ui/badge';
 import Link from 'next/link';
 import { CalendarIcon, MapPinIcon } from 'lucide-react';
+import { Skeleton } from '../ui/skeleton';
 
-export default function EventCard({ event }: { event: TicketEvent }) {
+export function EventCard({ event }: { event: TicketEvent }) {
   return (
     <Link href={`/events/${event.id}`} >
       <Card key={event.id} className='h-full flex flex-col justify-between'>
@@ -48,5 +49,40 @@ export default function EventCard({ event }: { event: TicketEvent }) {
       </Card>
     </Link>
     
+  );
+}
+
+export function EventCardSkeleton() {
+  return (
+    <Card className='h-full flex flex-col justify-between'>
+      <Skeleton className="relative z-20 w-full h-48 object-cover rounded-none" />
+      <CardHeader>
+        
+        <CardTitle><Skeleton className="h-5 w-full" /></CardTitle>
+      </CardHeader>
+
+      <CardContent>
+        <CardDescription className='flex flex-col gap-1'>
+          <Skeleton className="h-4 w-4/5" />
+          <Skeleton className="h-4 w-2/3" />
+        </CardDescription>
+      </CardContent>
+
+      <CardContent className='flex flex-col gap-1'>
+        <div className='flex items-center gap-2'>
+          <CalendarIcon className="h-4 w-4" />
+          <Skeleton className="h-4 w-1/3" />
+        </div>
+
+        <div className='flex items-center gap-2'>
+          <MapPinIcon className="h-4 w-4" />
+          <Skeleton className="h-4 w-2/3" />
+        </div> 
+      </CardContent>
+
+      <CardContent className='flex items-center justify-center'>
+        <Skeleton className="h-8 w-1/3" />
+      </CardContent>
+    </Card>
   );
 }
