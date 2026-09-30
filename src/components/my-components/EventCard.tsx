@@ -12,12 +12,13 @@ export function EventCard({ event }: { event: TicketEvent }) {
   return (
     <Link href={`/events/${event.id}`} >
       <Card key={event.id} className='h-full flex flex-col justify-between'>
+        <div className="absolute" />
         <Image
           width={400}
           height={200}
           src={event.imageUrl || 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba'}
           alt={event.title}
-          className="relative z-20 w-full object-cover"
+          className="relative z-20 w-full object-cover aspect-square"
         />
         <CardHeader>
           <CardAction>
@@ -53,9 +54,9 @@ export function EventCard({ event }: { event: TicketEvent }) {
 export function EventCardSkeleton() {
   return (
     <Card className='h-full flex flex-col justify-between'>
-      <Skeleton className="relative z-20 w-full h-48 object-cover rounded-none" />
+      <Skeleton className="relative z-20 w-full object-cover rounded-none aspect-square" />
+      
       <CardHeader>
-        
         <CardTitle><Skeleton className="h-5 w-full" /></CardTitle>
       </CardHeader>
 
