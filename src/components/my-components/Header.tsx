@@ -13,7 +13,7 @@ export default function Header() {
 
   const accountLink = auth.user?.role === "CONSUMER" ? "/tickets": auth.user?.role === "ORGANIZER" ? "/organizer" : "/gate"
 
-  if (pathName !== '/' && !auth.token) {
+  if (pathName === '/login' || pathName === '/register') {
     return null
   }
 
