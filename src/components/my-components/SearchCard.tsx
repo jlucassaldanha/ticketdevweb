@@ -24,7 +24,7 @@ export default function SearchCard({ control, categoryOptions }: SearchCardProps
           name="search"
           control={control}
           render={({ field, fieldState }) => (
-            <Field className='w-3/4'>
+            <Field className='md:w-3/4'>
               <Label htmlFor='search'>Procurar</Label>
               <Input 
                 {...field}
@@ -43,7 +43,7 @@ export default function SearchCard({ control, categoryOptions }: SearchCardProps
           name='category'
           control={control}
           render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid} className='w-1/4'>
+            <Field data-invalid={fieldState.invalid} className='md:w-1/4'>
               <Label htmlFor='category'>Categoria</Label>
               <Select 
                 items={categoryOptions}
