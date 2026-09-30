@@ -1,10 +1,5 @@
-import EventDate from '@/components/my-components/EventDate';
-import EventLocation from '@/components/my-components/EventLocation';
 import OrderCard from '@/components/my-components/OrderCard';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-
-
+import { Card, CardContent } from '@/components/ui/card';
 
 export default function EventPage() {
   return (
