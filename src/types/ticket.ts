@@ -1,11 +1,11 @@
-import { Event } from "./event";
+import { TicketEvent } from "./event";
 
 export interface Ticket {
   id: string
   seatNumber: string | null
   status: string
   secureHash: string;
-  event: Event;
+  event: TicketEvent;
 }
 
 export interface ReserveTicketResponse {
@@ -13,7 +13,7 @@ export interface ReserveTicketResponse {
   secureHash: string;
   seatNumber: string;
   status: string;
-  event: Event;
+  event: TicketEvent;
 }
 
 export interface SharedTicket {
