@@ -21,9 +21,6 @@ export default function EventPage() {
 
   return (
     <div className='flex flex-col md:flex-row gap-5 justify-center items-center p-10'>
-      <div>
-        <span>{error?.message}</span>
-      </div>
       <div className='flex flex-col gap-5 w-full md:w-2/3'>
         <SeatSelectionCard
           rows={rows}
@@ -32,6 +29,10 @@ export default function EventPage() {
           selectedSeat={selectedSeat}
           handleSeatClick={handleSeatClick}
         />
+      </div>
+
+      <div>
+        <span>{error?.message}</span>
       </div>
       
       <div className='flex flex-col gap-5 w-full md:w-1/3 items-center justify-center'>

@@ -9,7 +9,7 @@ export default function useCheckout({ eventId, seat }: { eventId: string | null,
 
   const [paymentMethod, setPaymentMethod] = useState('PIX');
 
-  const { mutate: processPayment, isPending: submitting, isSuccess: success, error } = useMutation({
+  const { mutate: processPayment, isPending, isSuccess, error } = useMutation({
     mutationFn: async ({ simulateStatus, paymentMethod }: { simulateStatus: 'APPROVED' | 'REFUSED', paymentMethod: string }) => {
       if (!eventId || !seat) {
         throw new Error('Event ID or seat is missing');
@@ -31,11 +31,11 @@ export default function useCheckout({ eventId, seat }: { eventId: string | null,
     }
   })
 
-  const errorMessage = error instanceof Error ? error.message : 'Ocorreu um erro ao processar o pagamento.';
+  const errorMessage = error instanceof Error ? error.message : '';
 
   return {
-    submitting,
-    success,
+    isPending,
+    isSuccess,
     error: errorMessage,
     paymentMethod,
     processPayment,

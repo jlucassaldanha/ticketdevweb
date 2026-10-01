@@ -2,6 +2,7 @@
 
 import { OrderCard, OrderCardSkeleton } from '@/components/my-components/OrderCard';
 import { PaymentMethodCard } from '@/components/my-components/PaymentMethodCard';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useAuth } from '@/contexts/authContext';
 import useCheckout from '@/hooks/useCheckout';
@@ -17,8 +18,8 @@ export default function CheckoutPage() {
 
   const { event, isLoading, error } = useEventDetails(eventId);
   const {
-    submitting,
-    success,
+    isPending,
+    isSuccess,
     error: errorMessage,
     paymentMethod,
     processPayment,
@@ -63,8 +64,44 @@ export default function CheckoutPage() {
             />
           )}
         </div>
+
+        <div>
+          <span>{error?.message}</span>
+        </div>
       </div>
+
+      {isSuccess && (
+        <div className='text-green-500'>
+          Pagamento aprovado com sucesso!
+        </div>
+      )}
+
+      {errorMessage && (
+        <div className='text-red-500'>
+          {errorMessage}
+        </div>
+      )}
       
+      <div>
+        <Card>
+          <CardContent className='flex gap-5 items-center justify-center'>
+            <Button 
+              className='bg-green-500 hover:bg-green-600 text-foreground' 
+              onClick={() => processPayment({ simulateStatus: 'APPROVED', paymentMethod })}
+              disabled={isPending}
+            >
+              Simular Aprovação
+            </Button>
+            <Button 
+              className='bg-red-500 hover:bg-red-600 text-foreground' 
+              onClick={() => processPayment({ simulateStatus: 'REFUSED', paymentMethod })}
+              disabled={isPending}
+            >
+              Simular Recusa
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   )
 }
