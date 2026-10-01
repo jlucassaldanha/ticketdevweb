@@ -1,13 +1,29 @@
 "use client"
 
-import { OrderCard } from '@/components/my-components/OrderCard';
-import { PaymentMethod } from '@/components/my-components/PaymentMethod';
+import { OrderCard, OrderCardSkeleton } from '@/components/my-components/OrderCard';
+import { PaymentMethodCard } from '@/components/my-components/PaymentMethodCard';
 import { Card, CardContent } from '@/components/ui/card';
 import { useAuth } from '@/contexts/authContext';
-import { redirect } from 'next/navigation';
+import useCheckout from '@/hooks/useCheckout';
+import useEventDetails from '@/hooks/useEventDetails';
+import { redirect, useSearchParams } from 'next/navigation';
 
 export default function CheckoutPage() {
   const auth = useAuth()
+  const searchParams = useSearchParams()
+  
+  const eventId = searchParams.get('eventId') || '';
+  const seat = searchParams.get('seat') || '';
+
+  const { event, isLoading, error } = useEventDetails(eventId);
+  const {
+    submitting,
+    success,
+    error: errorMessage,
+    paymentMethod,
+    processPayment,
+    setPaymentMethod
+  } = useCheckout({ eventId, seat });
   
   if (!auth.token) {
     redirect('/login')
@@ -28,20 +44,24 @@ export default function CheckoutPage() {
           <Card className='flex flex-col gap-5 w-full'>
             <CardContent>Método de Pagamento:</CardContent>
           </Card>
-          <PaymentMethod />
+          <PaymentMethodCard onChange={setPaymentMethod} value={paymentMethod} />
         </div>
 
         <div className='flex flex-col gap-3 w-full items-center justify-center'>
           <Card className='flex flex-col gap-5 w-full'>
             <CardContent>Resumo do pedido:</CardContent>
           </Card>
-          <OrderCard 
-            date='04/11/2001'
-            location='Local do Evento'
-            price='100,00'
-            seat='A1'
-            title='Nome do Evento'
-          />
+          {!event || isLoading ? (
+            <OrderCardSkeleton />
+          ) : (
+            <OrderCard 
+              title={event.title || 'Event Title'}
+              date={new Date(event.date).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+              location={event.location || "Location"}
+              seat={seat || "Nenhum"}
+              price={event.price.toFixed(2).toString().replace('.', ',') || "0,00"}
+            />
+          )}
         </div>
       </div>
       
