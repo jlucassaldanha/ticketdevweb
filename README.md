@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎟️ TicketDevWeb
 
-## Getting Started
+Este é o repositório do **Front-End da TicketDev**, uma plataforma de venda, gerenciamento e validação de ingressos de cinema.
 
-First, run the development server:
+Ele consome a API Rest construída em Node que esta em produção em [TicketDevApi](https://ticketdevapi.onrender.com/api-docs), e o repositório em [TicketDevApiRepo](https://github.com/jlucassaldanha/ticketdevapi) 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Aviso sobre lentidão
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Devido a aplicação em produção estar publicada na plataforma Render utilizando o Free Tier, há certa lentidão no primeiro acesso após um tempo de inatividade.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
+## Aviso sobre construção
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Este projeto ainda esta em construção, por isso não se assuste caso bata de frente com uma página incompleta ou que não existe.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🚀 Tecnologias e Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+O projeto foi construído utilizando as melhores práticas e ferramentas do ecossistema React/Next.js moderno:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+* **Framework:** [Next.js](https://nextjs.org/) (App Router & Server Actions)
+* **Gerenciamento de Estado & Cache:** [TanStack Query (React Query)](https://tanstack.com/query)
+* **Estilização:** [Tailwind CSS](https://tailwindcss.com/)
+* **Componentes de UI:** [Shadcn UI](https://ui.shadcn.com/) / Base UI
+* **Validação de Formulários:** Zod & React Hook Form
+* **Linguagem:** TypeScript
 
-## Deploy on Vercel
+## 🚀 Como Executar o Front-End
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Pré-requisitos
+*   **Node.js (v20 ou v22+)**
+*   **Back-end da TicketDev** rodando (localmente ou via Docker na porta `3000` ou pela API publicada em `https://ticketdevapi.onrender.com`)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Passo a Passo Local:
+1.  Navegue até a pasta do projeto front-end no terminal:
+    ```bash
+    cd ticketdevwebapp
+    ```
+2.  Instale todas as dependências do ecossistema:
+    ```bash
+    npm install
+    ```
+3.  Configure o arquivo de variáveis de ambiente **`.env.local`** na raiz do front-end:
+    ```bash
+    NEXT_PUBLIC_API_URL="http://localhost:3000" # ou "https://ticketdevapi.onrender.com"
+    ```
+4.  Inicie o servidor de desenvolvimento:
+    ```bash
+    npm run dev
+    ```
+
+O front-end estará disponível em: **`http://localhost:3000`** ou **`http://localhost:3001`**
+
+---

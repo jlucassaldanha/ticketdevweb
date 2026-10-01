@@ -5,17 +5,20 @@ import { Badge } from '../ui/badge';
 import Link from 'next/link';
 import { CalendarIcon, MapPinIcon } from 'lucide-react';
 import { Skeleton } from '../ui/skeleton';
+import EventDate from './EventDate';
+import EventLocation from './EventLocation';
 
 export function EventCard({ event }: { event: TicketEvent }) {
   return (
     <Link href={`/events/${event.id}`} >
       <Card key={event.id} className='h-full flex flex-col justify-between'>
+        <div className="absolute" />
         <Image
           width={400}
           height={200}
           src={event.imageUrl || 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba'}
           alt={event.title}
-          className="relative z-20 w-full object-cover"
+          className="relative z-20 w-full object-cover aspect-square"
         />
         <CardHeader>
           <CardAction>
@@ -32,15 +35,11 @@ export function EventCard({ event }: { event: TicketEvent }) {
         </CardContent>
 
         <CardContent className='flex flex-col gap-1'>
-          <div className='flex items-center gap-2'>
-            <CalendarIcon className="h-4 w-4" />
-            <span>{new Date(event.date).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })}</span>
-          </div>
+          <EventDate 
+            date={new Date(event.date).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })} 
+          />
 
-          <div className='flex items-center gap-2'>
-            <MapPinIcon className="h-4 w-4" />
-            <span>{event.location}</span>
-          </div> 
+          <EventLocation location={event.location} />
         </CardContent>
 
         <CardContent className='flex items-center justify-center'>
@@ -55,9 +54,9 @@ export function EventCard({ event }: { event: TicketEvent }) {
 export function EventCardSkeleton() {
   return (
     <Card className='h-full flex flex-col justify-between'>
-      <Skeleton className="relative z-20 w-full h-48 object-cover rounded-none" />
+      <Skeleton className="relative z-20 w-full object-cover rounded-none aspect-square" />
+      
       <CardHeader>
-        
         <CardTitle><Skeleton className="h-5 w-full" /></CardTitle>
       </CardHeader>
 
