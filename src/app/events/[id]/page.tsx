@@ -2,6 +2,7 @@
 
 import { OrderCard, OrderCardSkeleton } from '@/components/my-components/OrderCard';
 import { SeatSelectionCard } from '@/components/my-components/SeatSelectionCard';
+import { Button } from '@/components/ui/button';
 import useEventDetails from '@/hooks/useEventDetails';
 import useSeatSelection from '@/hooks/useSeatSelection';
 import { useParams } from 'next/navigation';
@@ -20,6 +21,9 @@ export default function EventPage() {
 
   return (
     <div className='flex flex-col md:flex-row gap-5 justify-center items-center p-10'>
+      <div>
+        <span>{error?.message}</span>
+      </div>
       <div className='flex flex-col gap-5 w-full md:w-2/3'>
         <SeatSelectionCard
           rows={rows}
@@ -40,9 +44,11 @@ export default function EventPage() {
             location={event.location || "Location"}
             seat={selectedSeat || "Nenhum"}
             price={event.price.toFixed(2).toString().replace('.', ',') || "0,00"}
-            onProceed={handleProceedToCheckout}
           />
         )}
+        <Button className="w-full" onClick={handleProceedToCheckout} disabled={selectedSeat === "Nenhum"}>
+          Confirmar e Ir para o Pagamento
+        </Button>
       </div>
     </div>  
   )

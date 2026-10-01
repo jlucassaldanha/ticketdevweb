@@ -1,7 +1,6 @@
 import EventDate from '@/components/my-components/EventDate';
 import EventLocation from '@/components/my-components/EventLocation';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '../ui/skeleton';
 
 interface OrderCardProps {
@@ -10,12 +9,11 @@ interface OrderCardProps {
   location: string;
   seat: string;
   price: string;
-  onProceed: () => void;
 }
 
-export function OrderCard({ title, date, location, seat, price, onProceed }: OrderCardProps) {
+export function OrderCard({ title, date, location, seat, price }: OrderCardProps) {
   return (
-    <Card>
+    <Card className='w-full'>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
@@ -36,19 +34,13 @@ export function OrderCard({ title, date, location, seat, price, onProceed }: Ord
         <span>Valor:</span>
         <span className='font-bold text-lg'>R$ {price}</span>
       </CardContent>
-
-      <CardFooter>
-        <Button className="w-full" onClick={onProceed}>
-          Confirmar e Ir para o Pagamento
-        </Button>
-      </CardFooter>
     </Card>
   )
 }
 
 export function OrderCardSkeleton() {
   return (
-    <Card className='w-100'>
+    <Card className='w-full'>
       <CardHeader>
         <Skeleton className="h-8 w-full" />
       </CardHeader>
@@ -67,10 +59,6 @@ export function OrderCardSkeleton() {
       <CardContent className='flex items-center justify-between'>
         <Skeleton className="h-4 w-full" />
       </CardContent>
-
-      <CardFooter>
-        <Skeleton className="h-10 w-full" />
-      </CardFooter>
     </Card>
   )
 }
