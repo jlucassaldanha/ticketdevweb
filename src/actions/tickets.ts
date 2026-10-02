@@ -1,7 +1,7 @@
 'use server'
 
 import { apiFetch } from '@/lib/api';
-import { Ticket } from '@/types/ticket';
+import { SharedTicket, Ticket } from '@/types/ticket';
 
 interface ReservePayload {
   eventId: string;
@@ -29,4 +29,9 @@ export async function cancelTicketAction(id: string) {
   } catch (err) {
     alert(err instanceof Error ? err.message : 'Falha ao cancelar o ingresso.')
   }
+}
+
+export async function shareTicketAction(hash: string) {
+  const response = await apiFetch<{ticket: SharedTicket}>(`/api/tickets/share/${hash}`)
+  return response.ticket
 }

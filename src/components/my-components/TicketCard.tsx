@@ -15,9 +15,9 @@ interface TicketCardProps {
   status: string;
   qrUrl: string;
   isShared?: boolean
-  isLoadingCancel: boolean
-  onShare: () => void
-  onCancel: () => void
+  isLoadingCancel?: boolean
+  onShare?: () => void
+  onCancel?: () => void
 }
 
 export function TicketCard({ 
