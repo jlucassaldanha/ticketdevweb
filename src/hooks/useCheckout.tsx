@@ -8,6 +8,8 @@ export default function useCheckout({ eventId, seat }: { eventId: string | null,
   const router = useRouter()
 
   const [paymentMethod, setPaymentMethod] = useState('PIX');
+  const [lastStatus, setLastStatus] = useState<'APPROVED' | 'REFUSED' | null>(null)
+
 
   const { mutate: processPayment, isPending, isSuccess, error } = useMutation({
     mutationFn: async ({ simulateStatus, paymentMethod }: { simulateStatus: 'APPROVED' | 'REFUSED', paymentMethod: string }) => {
@@ -23,11 +25,15 @@ export default function useCheckout({ eventId, seat }: { eventId: string | null,
       });
     },
     onSuccess: (_, variables) => {
+      setLastStatus(variables.simulateStatus);
       if (variables.simulateStatus === 'APPROVED') {
         setTimeout(() => {
           router.push('/tickets');
         }, 2500);
       }
+    },
+    onError: () => {
+      setLastStatus(null);
     }
   })
 
@@ -36,6 +42,7 @@ export default function useCheckout({ eventId, seat }: { eventId: string | null,
   return {
     isPending,
     isSuccess,
+    lastStatus,
     error: errorMessage,
     paymentMethod,
     processPayment,

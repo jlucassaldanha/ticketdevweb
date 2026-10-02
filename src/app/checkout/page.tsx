@@ -1,5 +1,6 @@
 "use client"
 
+import { AlertCard } from '@/components/my-components/AlertCard';
 import { OrderCard, OrderCardSkeleton } from '@/components/my-components/OrderCard';
 import { PaymentMethodCard } from '@/components/my-components/PaymentMethodCard';
 import { Button } from '@/components/ui/button';
@@ -7,6 +8,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useAuth } from '@/contexts/authContext';
 import useCheckout from '@/hooks/useCheckout';
 import useEventDetails from '@/hooks/useEventDetails';
+import { AlertCircleIcon, CheckCircle2Icon } from 'lucide-react';
 import { redirect, useSearchParams } from 'next/navigation';
 
 export default function CheckoutPage() {
@@ -20,6 +22,7 @@ export default function CheckoutPage() {
   const {
     isPending,
     isSuccess,
+    lastStatus,
     error: errorMessage,
     paymentMethod,
     processPayment,
@@ -64,21 +67,49 @@ export default function CheckoutPage() {
             />
           )}
         </div>
-
-        <div>
-          <span>{error?.message}</span>
-        </div>
+        
+        {error && (
+          <div>
+            <AlertCard 
+              color='red'
+              title='Erro'
+              description={error.message}
+              icon={<AlertCircleIcon />}
+            />
+          </div>
+        )}
       </div>
 
-      {isSuccess && (
-        <div className='text-green-500'>
-          Pagamento aprovado com sucesso!
+      {isSuccess && lastStatus === 'APPROVED' && (
+        <div>
+          <AlertCard 
+            color='green'
+            title='Pagamento Aprovado'
+            description='Seu pagamento foi aprovado com sucesso!'
+            icon={<CheckCircle2Icon />}
+          />
+        </div>
+      )}
+
+      {isSuccess && lastStatus === 'REFUSED' && (
+        <div>
+          <AlertCard 
+            color='red'
+            title='Pagamento Recusado'
+            description='Seu pagamento foi recusado.'
+            icon={<AlertCircleIcon />}
+          />
         </div>
       )}
 
       {errorMessage && (
-        <div className='text-red-500'>
-          {errorMessage}
+        <div >
+          <AlertCard 
+            color='red'
+            title='Pagamento Recusado'
+            description={errorMessage}
+            icon={<AlertCircleIcon />}
+          />
         </div>
       )}
       
