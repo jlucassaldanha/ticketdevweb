@@ -1,9 +1,11 @@
 import EventDate from '@/components/my-components/EventDate';
 import EventLocation from '@/components/my-components/EventLocation';
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '../ui/skeleton';
 import { Badge } from '../ui/badge';
 import Image from 'next/image';
+import { Button } from '../ui/button';
+import { TicketMinus, TicketX } from 'lucide-react';
 
 interface TicketCardProps {
   title: string;
@@ -16,12 +18,12 @@ interface TicketCardProps {
 
 export function TicketCard({ title, date, location, seat, status, qrUrl }: TicketCardProps) {
   return (
-    <Card className='flex'>
+    <Card className='flex w-full'>
       <CardHeader>
         <CardAction>
-          <Badge>{status}</Badge>
+          <Badge variant={status === 'Ativo' ? 'default' : status === 'Cancelado' ? 'destructive' : 'outline'}>{status}</Badge>
         </CardAction>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className='font-extrabold text-2xl'>{title}</CardTitle>
       </CardHeader>
 
       <CardContent className='flex flex-col gap-2'>
@@ -34,14 +36,36 @@ export function TicketCard({ title, date, location, seat, status, qrUrl }: Ticke
       </CardContent>
 
       <CardContent className='w-full flex items-center justify-center'>
-        <Image
-          className='rounded-sm items-center justify-center' 
-          src={qrUrl}
-          alt='QR Code'
-          width={150}
-          height={150}
-        />
+        {status === 'Cancelado' ? (
+          <div className='text-red-500 flex flex-col items-center'>
+            <TicketX size={150} />
+            <span className='font-bold text-2xl'>INGRESSO CANCELADO</span>
+          </div>
+        ) : status === 'Utilizado' ? (
+          <div className='flex flex-col items-center'>
+            <TicketMinus size={150} />
+            <span className='font-bold text-2xl'>INGRESSO UTILIZADO</span>
+          </div>
+        ) : (
+          <Image
+            className='items-center justify-center aspect-square' 
+            src={qrUrl}
+            alt='QR Code'
+            width={150}
+            height={150}
+          />
+        )}
+        
       </CardContent>
+
+      <CardFooter className='w-full'>
+        {status !== 'Cancelado' && status !== 'Utilizado' && (
+          <div className='w-full flex justify-center gap-5'>
+            <Button>Compartilhar</Button>
+            <Button>Cancelar compra</Button>
+          </div>
+        )}
+      </CardFooter>
     </Card>
   )
 }
@@ -64,8 +88,12 @@ export function TicketCardSkeleton() {
         </div>
       </CardContent>
 
-      <CardContent className='flex flex-col gap-1'>
-        <Skeleton className="h-50 w-50" />
+      <CardContent className='flex gap-1 w-full justify-center'>
+        <Skeleton className="h-50 w-3/4" />
+      </CardContent>
+
+      <CardContent className='flex w-full justify-center'>
+        <Skeleton className="h-10 w-4/5" />
       </CardContent>
     </Card>
   )

@@ -1,10 +1,12 @@
 "use client"
 
+import { AlertCard } from '@/components/my-components/AlertCard';
 import { OrderCard, OrderCardSkeleton } from '@/components/my-components/OrderCard';
 import { SeatSelectionCard } from '@/components/my-components/SeatSelectionCard';
 import { Button } from '@/components/ui/button';
 import useEventDetails from '@/hooks/useEventDetails';
 import useSeatSelection from '@/hooks/useSeatSelection';
+import { AlertCircleIcon } from 'lucide-react';
 import { useParams } from 'next/navigation';
 
 export default function EventPage() {
@@ -32,7 +34,12 @@ export default function EventPage() {
       </div>
 
       <div>
-        <span>{error?.message}</span>
+        <AlertCard 
+          color='red'
+          title='Erro'
+          description={error?.message || ''}
+          icon={<AlertCircleIcon />}
+        />
       </div>
       
       <div className='flex flex-col gap-5 w-full md:w-1/3 items-center justify-center'>

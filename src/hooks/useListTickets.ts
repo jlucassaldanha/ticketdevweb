@@ -3,7 +3,7 @@ import { Ticket } from '@/types/ticket';
 import { useQuery } from '@tanstack/react-query';
 
 export default function useListTickets () {
-  const { data: tickets = [], isPending, isError } = useQuery<Ticket[]>({
+  const { data: tickets = [], isPending, error } = useQuery<Ticket[]>({
     queryKey: ['tickets'],
     queryFn: async () => await listTicketsAction(),
   }) 
@@ -11,6 +11,6 @@ export default function useListTickets () {
   return {
     tickets,
     isPending,
-    isError
+    error
   }
 }

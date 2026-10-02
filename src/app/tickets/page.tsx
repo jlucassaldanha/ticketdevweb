@@ -1,8 +1,10 @@
 "use client"
 
+import { AlertCard } from '@/components/my-components/AlertCard';
 import { TicketCard, TicketCardSkeleton } from '@/components/my-components/TicketCard';
 import { useAuth } from '@/contexts/authContext';
 import useListTickets from '@/hooks/useListTickets';
+import { AlertCircleIcon } from 'lucide-react';
 import { redirect } from 'next/navigation';
 
 export default function TicketsPage() {
@@ -16,17 +18,18 @@ export default function TicketsPage() {
     redirect('/')
   }
 
-  const { tickets, isPending, isError } = useListTickets()
+  const { tickets, isPending, error } = useListTickets()
 
   return (
     <div className='flex flex-col gap-5 justify-center items-center p-10'>
-      <div className='text-2xl font-bold w-full'>
+      <div className='text-3xl font-bold w-full'>
         Meus ingressos
       </div>
 
-      <div className='w-ful'>
+      <div className='w-full'>
         {isPending && (
           <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5'>
+            <TicketCardSkeleton />
             <TicketCardSkeleton />
             <TicketCardSkeleton />
             <TicketCardSkeleton />
@@ -34,7 +37,18 @@ export default function TicketsPage() {
         )}
       </div>
 
-      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5'>
+      {error && (
+        <div>
+          <AlertCard 
+            color='red'
+            title='Erro'
+            description={error.message}
+            icon={<AlertCircleIcon />}
+          />
+        </div>
+      )}
+
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full'>
         {tickets.map((ticket) => (
           <TicketCard
             key={ticket.id}
@@ -42,7 +56,7 @@ export default function TicketsPage() {
             date={new Date(ticket.event.date).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })}
             location={ticket.event.location}
             seat={ticket.seatNumber || "Pista"}
-            status={ticket.status === "ACTIVE" ? "Ativo" : "Inativo"}
+            status={ticket.status === "ACTIVE" ? "Ativo" : ticket.status === "USED" ? "Utilizado" : "Cancelado"}
             qrUrl={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&color=000000&bgcolor=ffffff&data=${ticket.secureHash}`}
           />
         ))}
