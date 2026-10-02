@@ -32,17 +32,19 @@ export default function EventPage() {
           handleSeatClick={handleSeatClick}
         />
       </div>
-
-      <div>
-        <AlertCard 
-          color='red'
-          title='Erro'
-          description={error?.message || ''}
-          icon={<AlertCircleIcon />}
-        />
-      </div>
       
       <div className='flex flex-col gap-5 w-full md:w-1/3 items-center justify-center'>
+        {error && (
+          <div>
+            <AlertCard 
+              color='red'
+              title='Erro'
+              description={error.message || ''}
+              icon={<AlertCircleIcon />}
+            />
+          </div>
+        )}
+
         {!event || isLoading ? (
           <OrderCardSkeleton />
         ) : (
