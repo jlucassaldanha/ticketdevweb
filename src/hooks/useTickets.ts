@@ -1,8 +1,10 @@
-import { listTicketsAction } from '@/actions/tickets';
+import { cancelTicketAction, listTicketsAction } from '@/actions/tickets';
 import { Ticket } from '@/types/ticket';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-export default function useListTickets () {
+export default function useTickets () {
+  const queryClient = useQueryClient();
+
   const { data: tickets = [], isPending, error } = useQuery<Ticket[]>({
     queryKey: ['tickets'],
     queryFn: async () => await listTicketsAction(),
@@ -16,10 +18,20 @@ export default function useListTickets () {
       .catch(() => alert(`Copie este link para compartilhar: ${url}`))
   }
 
+  const { mutate: cancelTicket, isPending: isLoadingCancel, error: errorCancel } = useMutation({
+    mutationFn: async (id: string) => await cancelTicketAction(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tickets'] });
+    }
+  })
+
   return {
     tickets,
     isPending,
     error,
+    isLoadingCancel,
+    errorCancel,
+    cancelTicket,
     handleShareTicket
   }
 }

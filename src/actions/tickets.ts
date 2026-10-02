@@ -20,3 +20,13 @@ export async function reserveTicketAction(payload: ReservePayload) {
 export async function listTicketsAction() {
   return await apiFetch<Ticket[]>('/api/tickets/my-tickets')
 }
+
+export async function cancelTicketAction(id: string) {
+  try {
+    await apiFetch(`/api/tickets/${id}/cancel`, {
+      method: 'POST'
+    })
+  } catch (err) {
+    alert(err instanceof Error ? err.message : 'Falha ao cancelar o ingresso.')
+  }
+}
