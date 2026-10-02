@@ -13,10 +13,12 @@ interface TicketCardProps {
   location: string;
   seat: string;
   status: string;
-  qrUrl: string
+  qrUrl: string;
+  isShared?: boolean
+  onShare: () => void
 }
 
-export function TicketCard({ title, date, location, seat, status, qrUrl }: TicketCardProps) {
+export function TicketCard({ title, date, location, seat, status, qrUrl, isShared, onShare }: TicketCardProps) {
   return (
     <Card className='flex w-full'>
       <CardHeader>
@@ -30,7 +32,7 @@ export function TicketCard({ title, date, location, seat, status, qrUrl }: Ticke
         <EventDate date={date} />
         <EventLocation location={location} />
         <div className='flex items-center gap-2'>
-          <span>Assento:</span>
+          <span>Lugar:</span>
           <span>{seat}</span>
         </div>
       </CardContent>
@@ -55,17 +57,16 @@ export function TicketCard({ title, date, location, seat, status, qrUrl }: Ticke
             height={150}
           />
         )}
-        
       </CardContent>
-
-      <CardFooter className='w-full'>
-        {status !== 'Cancelado' && status !== 'Utilizado' && (
+      
+      {status !== 'Cancelado' && status !== 'Utilizado' && !isShared && (
+        <CardFooter className='w-full'>
           <div className='w-full flex justify-center gap-5'>
-            <Button>Compartilhar</Button>
+            <Button onClick={onShare}>Compartilhar</Button>
             <Button>Cancelar compra</Button>
           </div>
-        )}
-      </CardFooter>
+        </CardFooter>
+      )}
     </Card>
   )
 }

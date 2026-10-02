@@ -18,7 +18,7 @@ export default function TicketsPage() {
     redirect('/')
   }
 
-  const { tickets, isPending, error } = useListTickets()
+  const { tickets, isPending, error, handleShareTicket } = useListTickets()
 
   return (
     <div className='flex flex-col gap-5 justify-center items-center p-10'>
@@ -58,6 +58,7 @@ export default function TicketsPage() {
             seat={ticket.seatNumber || "Pista"}
             status={ticket.status === "ACTIVE" ? "Ativo" : ticket.status === "USED" ? "Utilizado" : "Cancelado"}
             qrUrl={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&color=000000&bgcolor=ffffff&data=${ticket.secureHash}`}
+            onShare={() => handleShareTicket(ticket.secureHash)}
           />
         ))}
       </div>
