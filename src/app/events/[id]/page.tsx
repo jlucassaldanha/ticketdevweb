@@ -56,7 +56,7 @@ export default function EventPage() {
             price={event.price.toFixed(2).toString().replace('.', ',') || "0,00"}
           />
         )}
-        <Button className="w-full" onClick={handleProceedToCheckout} disabled={selectedSeat === "Nenhum"}>
+        <Button className="w-full" onClick={handleProceedToCheckout} disabled={!selectedSeat}>
           Confirmar e Ir para o Pagamento
         </Button>
       </div>
