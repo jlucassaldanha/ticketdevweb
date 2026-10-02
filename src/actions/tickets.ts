@@ -1,6 +1,7 @@
 'use server'
 
 import { apiFetch } from '@/lib/api';
+import { Ticket } from '@/types/ticket';
 
 interface ReservePayload {
   eventId: string;
@@ -14,4 +15,8 @@ export async function reserveTicketAction(payload: ReservePayload) {
     method: 'POST',
     body: JSON.stringify(payload),
   })
+}
+
+export async function listTicketsAction() {
+  return await apiFetch<Ticket[]>('/api/tickets/my-tickets')
 }

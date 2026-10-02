@@ -39,7 +39,7 @@ export default function CheckoutPage() {
 
   return (
     <div className='flex flex-col gap-5 justify-center items-center p-10'>
-      <div className='flex flex-col gap-5 w-full'>
+      <div className='flex flex-col gap-5 w-full text-2xl font-bold'>
         <h1>Finalizar Compra</h1>
       </div>
 
