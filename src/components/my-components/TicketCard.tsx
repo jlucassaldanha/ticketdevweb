@@ -15,10 +15,23 @@ interface TicketCardProps {
   status: string;
   qrUrl: string;
   isShared?: boolean
-  onShare: () => void
+  isLoadingCancel?: boolean
+  onShare?: () => void
+  onCancel?: () => void
 }
 
-export function TicketCard({ title, date, location, seat, status, qrUrl, isShared, onShare }: TicketCardProps) {
+export function TicketCard({ 
+  title, 
+  date, 
+  location, 
+  seat, 
+  status, 
+  qrUrl, 
+  isShared, 
+  isLoadingCancel, 
+  onShare, 
+  onCancel 
+}: TicketCardProps) {
   return (
     <Card className='flex w-full'>
       <CardHeader>
@@ -63,7 +76,7 @@ export function TicketCard({ title, date, location, seat, status, qrUrl, isShare
         <CardFooter className='w-full'>
           <div className='w-full flex justify-center gap-5'>
             <Button onClick={onShare}>Compartilhar</Button>
-            <Button>Cancelar compra</Button>
+            <Button variant="destructive" onClick={onCancel} disabled={isLoadingCancel}>{isLoadingCancel ? "Cancelando..." : "Cancelar compra"}</Button>
           </div>
         </CardFooter>
       )}

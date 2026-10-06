@@ -117,14 +117,14 @@ export default function CheckoutPage() {
         <Card>
           <CardContent className='flex gap-5 items-center justify-center'>
             <Button 
-              className='bg-green-500 hover:bg-green-600 text-foreground' 
+              className="bg-green-950 text-green-600" 
               onClick={() => processPayment({ simulateStatus: 'APPROVED', paymentMethod })}
               disabled={isPending}
             >
               Simular Aprovação
             </Button>
             <Button 
-              className='bg-red-500 hover:bg-red-600 text-foreground' 
+              variant="destructive"
               onClick={() => processPayment({ simulateStatus: 'REFUSED', paymentMethod })}
               disabled={isPending}
             >

@@ -25,7 +25,7 @@ export function OrderCard({ title, date, location, seat, price }: OrderCardProps
 
       <CardContent className='flex flex-col gap-1'>
         <div className='flex items-center gap-2 justify-between'>
-          <span>Assento Selecionado:</span>
+          <span>Lugar Selecionado:</span>
           <span>{seat ? seat : 'Nenhum'}</span>
         </div>
       </CardContent>
