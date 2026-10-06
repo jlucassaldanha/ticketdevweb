@@ -8,9 +8,9 @@ import { Skeleton } from '../ui/skeleton';
 import EventDate from './EventDate';
 import EventLocation from './EventLocation';
 
-export function EventCard({ event }: { event: TicketEvent }) {
+export function EventCard({ event, gateBanner }: { event: TicketEvent, gateBanner?: boolean }) {
   return (
-    <Link href={`/events/${event.id}`} >
+    <Link href={gateBanner ? `/gate/events/${event.id}` : `/events/${event.id}`} >
       <Card key={event.id} className='h-full flex flex-col justify-between'>
         <div className="absolute" />
         <Image
@@ -42,9 +42,11 @@ export function EventCard({ event }: { event: TicketEvent }) {
           <EventLocation location={event.location} />
         </CardContent>
 
-        <CardContent className='flex items-center justify-center'>
-          <span className='font-bold text-lg'>R$ {event.price.toFixed(2).replace('.', ',')}</span>
-        </CardContent>
+        {!gateBanner && (
+          <CardContent className='flex items-center justify-center'>
+            <span className='font-bold text-lg'>R$ {event.price.toFixed(2).replace('.', ',')}</span>
+          </CardContent>
+        )}
       </Card>
     </Link>
     
