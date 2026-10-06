@@ -11,7 +11,9 @@ import { useParams } from 'next/navigation';
 
 export default function EventPage() {
   const { id } = useParams() as { id: string };
+
   const { event, isLoading, error } = useEventDetails(id);
+  
   const { 
     rows, 
     seatsPerRow, 
