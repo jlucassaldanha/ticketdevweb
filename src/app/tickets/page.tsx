@@ -36,7 +36,7 @@ export default function TicketsPage() {
 
       <div className='w-full'>
         {isPending && (
-          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5'>
             <TicketCardSkeleton />
             <TicketCardSkeleton />
             <TicketCardSkeleton />
@@ -58,7 +58,7 @@ export default function TicketsPage() {
 
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full'>
         {tickets.map((ticket) => (
-          <div key={ticket.id} className='flex flex-col gap-5'>
+          <div key={ticket.id} className='flex flex-col h-full'>
             <TicketCard
               title={ticket.event.title}
               date={new Date(ticket.event.date).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })}
@@ -72,7 +72,7 @@ export default function TicketsPage() {
             />
             
             {errorCancel && (
-              <div>
+              <div className='mt-2'>
                 <AlertCard 
                   color='red'
                   title='Erro'

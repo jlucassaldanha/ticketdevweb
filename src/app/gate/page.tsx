@@ -1,24 +1,23 @@
-'use client'
+"use client"
 
-import useListEvents from '@/hooks/useListEvents';
-import SearchCard from '@/components/my-components/SearchCard';
-import { EventCard, EventCardSkeleton } from '@/components/my-components/EventCard';
+import { EventCard, EventCardSkeleton } from '@/components/my-components/EventCard'
+import SearchCard from '@/components/my-components/SearchCard'
+import useListEvents from '@/hooks/useListEvents'
 
-export default function Home() {
+export default function GatePage() {
   const { isPending, filteredEvents, categoryOptions, control} = useListEvents()
 
   return (
-    <div className='py-6 px-6'>
-      <div className='flex flex-col justify-center items-center gap-5 text-center py-20'>
-        <h1 className='text-5xl font-bold'>
-          Garanta seus ingressos <br />
-          <span>
-            com segurança.
-          </span>
-        </h1>
+    <div className='flex flex-col gap-5 justify-center items-center p-10'>
+      <div className='text-3xl font-bold w-full'>
+        Portaria
       </div>
 
-      <div className='flex flex-col gap-6'>
+      <div className='w-full'>
+        Escolha o evento que deseja validar
+      </div>
+
+      <div className='flex flex-col gap-6 w-full'>
         <SearchCard 
           control={control} 
           categoryOptions={categoryOptions} 
@@ -45,11 +44,11 @@ export default function Home() {
           
           <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5'>
             {filteredEvents.map(event => (
-              <EventCard key={event.id} event={event} />
+              <EventCard key={event.id} event={event} gateBanner />
             ))}
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }

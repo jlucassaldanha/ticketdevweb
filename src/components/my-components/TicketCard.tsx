@@ -33,7 +33,7 @@ export function TicketCard({
   onCancel 
 }: TicketCardProps) {
   return (
-    <Card className='flex w-full'>
+    <Card className='flex flex-col h-full w-full justify-between'>
       <CardHeader>
         <CardAction>
           <Badge variant={status === 'Ativo' ? 'default' : status === 'Cancelado' ? 'destructive' : 'outline'}>{status}</Badge>
