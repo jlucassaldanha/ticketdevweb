@@ -13,6 +13,15 @@ import { redirect, useSearchParams } from 'next/navigation';
 
 export default function CheckoutPage() {
   const auth = useAuth()
+
+  if (!auth.token) {
+    redirect('/login')
+  }
+
+  if (auth.user?.role !== 'CONSUMER') {
+    redirect('/')
+  }
+  
   const searchParams = useSearchParams()
   
   const eventId = searchParams.get('eventId') || '';
@@ -29,13 +38,7 @@ export default function CheckoutPage() {
     setPaymentMethod
   } = useCheckout({ eventId, seat });
   
-  if (!auth.token) {
-    redirect('/login')
-  }
-
-  if (auth.user?.role !== 'CONSUMER') {
-    redirect('/')
-  }
+  
 
   return (
     <div className='flex flex-col gap-5 justify-center items-center p-10'>

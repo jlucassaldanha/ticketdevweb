@@ -2,9 +2,21 @@
 
 import { EventCard, EventCardSkeleton } from '@/components/my-components/EventCard'
 import SearchCard from '@/components/my-components/SearchCard'
+import { useAuth } from '@/contexts/authContext'
 import useListEvents from '@/hooks/useListEvents'
+import { redirect } from 'next/navigation'
 
 export default function GatePage() {
+  const auth = useAuth()
+  
+  if (!auth.token) {
+    redirect('/login')
+  }
+
+  if (auth.user?.role !== 'VALIDATOR' && auth.user?.role !== 'ORGANIZER') {
+    redirect('/')
+  }
+
   const { isPending, filteredEvents, categoryOptions, control} = useListEvents()
 
   return (

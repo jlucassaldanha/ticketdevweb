@@ -1,11 +1,22 @@
 "use client"
 
 import { AlertCard } from '@/components/my-components/AlertCard';
+import { useAuth } from '@/contexts/authContext';
 import useEventDetails from '@/hooks/useEventDetails';
 import { AlertCircleIcon } from 'lucide-react';
-import { useParams } from 'next/navigation';
+import { redirect, useParams } from 'next/navigation';
 
 export default function GateEventPage() {
+  const auth = useAuth()
+    
+  if (!auth.token) {
+    redirect('/login')
+  }
+
+  if (auth.user?.role !== 'VALIDATOR' && auth.user?.role !== 'ORGANIZER') {
+    redirect('/')
+  }
+
   const { id } = useParams() as { id: string };
 
   const { event, isLoading, error } = useEventDetails(id);
