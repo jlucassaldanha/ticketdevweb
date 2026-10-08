@@ -33,7 +33,15 @@ export async function loginAction(email: string, password: string) {
       maxAge: 60 * 60 * 24 * 7
     })
 
-    ;(await cookies()).set('user_data', JSON.stringify(response.user))
+    ;(await cookies()).set({
+      name: 'user_data', 
+      value: JSON.stringify(response.user),
+      httpOnly: true, 
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7
+    })
 
     redirect('/')
   } catch (error) {
@@ -54,7 +62,6 @@ export async function registerAction(name: string, email: string, password: stri
   }
 }
 
-
 export async function logoutAction() {
   (await cookies()).delete('auth_token')
   ;(await cookies()).delete('user_data')
@@ -63,8 +70,9 @@ export async function logoutAction() {
 }
 
 export async function getTokenAndDataAction() {
-  const token = (await cookies()).get("auth_token")?.value 
-  const userStored = (await cookies()).get("user_data")?.value 
+  const cookieStore = await cookies()
+  const token = cookieStore.get("auth_token")?.value 
+  const userStored = cookieStore.get("user_data")?.value 
 
   const user = userStored ? (JSON.parse(userStored) as User) : null;
 
