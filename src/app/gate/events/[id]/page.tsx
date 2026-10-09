@@ -14,7 +14,7 @@ import { useAuth } from "@/contexts/authContext";
 import { useCameraScanner } from '@/hooks/useCameraScanner';
 import useEventDetails from "@/hooks/useEventDetails";
 import { useValidateTicket } from '@/hooks/useValidateTicket';
-import { AlertCircleIcon, Divide, QrCode } from "lucide-react";
+import { AlertCircleIcon, QrCode } from "lucide-react";
 import { redirect, useParams } from "next/navigation";
 import { Controller } from 'react-hook-form';
 
