@@ -11,9 +11,10 @@ import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from "@/contexts/authContext";
+import { useCameraScanner } from '@/hooks/useCameraScanner';
 import useEventDetails from "@/hooks/useEventDetails";
 import { useValidateTicket } from '@/hooks/useValidateTicket';
-import { AlertCircleIcon, Divide } from "lucide-react";
+import { AlertCircleIcon, Divide, QrCode } from "lucide-react";
 import { redirect, useParams } from "next/navigation";
 import { Controller } from 'react-hook-form';
 
@@ -40,6 +41,11 @@ export default function GateEventPage() {
     handleSubmit,
     onSubmit
   } = useValidateTicket(id)
+
+  const {
+    isCameraActive,
+    toggleCamera
+  } = useCameraScanner({ onScan: validateTicket })
 
   return (
     <div className="flex flex-col gap-5 justify-center items-center p-10">
@@ -86,8 +92,42 @@ export default function GateEventPage() {
                 <TabsTrigger value="manual">Manual</TabsTrigger>
               </TabsList>
               <TabsContent value="camera">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Validar com Câmera</CardTitle>
+                  </CardHeader>
 
+                  <CardContent>
+                    {isCameraActive ? (
+                      <div 
+                        id="qr-reader" 
+                        className="w-full max-w-[320px] rounded-xl overflow-hidden border border-zinc-700 [&_video]:rounded-xl" 
+                      />
+                    ) : (
+                      <div className="flex flex-col items-center justify-center py-10 text-primary">
+                        <QrCode className="w-16 h-16 mb-2 animate-pulse" />
+                      </div>
+                    )}
+
+                    <p>
+                      {isCameraActive
+                        ? 'Aponte a câmara traseira para o QR Code do ingresso.'
+                        : 'Clique no botão abaixo para ligar a câmara e escanear o bilhete.'}
+                    </p>
+                  </CardContent>
+
+                  <CardFooter>
+                    <Button 
+                      variant={isCameraActive ? "destructive" : "default"} 
+                      onClick={toggleCamera}
+                      className="w-full"
+                    >
+                      {isCameraActive ? 'Desligar Câmera' : 'Ligar Câmera'}
+                    </Button>
+                  </CardFooter>
+                </Card>
               </TabsContent>
+
               <TabsContent value="manual">
                 <Card >
                   <CardHeader>
