@@ -166,19 +166,19 @@ export default function GateEventPage() {
                     </Button>
                   </CardFooter>
                 </Card>
-
-                {validationResult.status !== 'NONE' && (
-                  <div className="mt-4 w-full">
-                    <AlertCard 
-                      color={validationResult.status === 'VALID' ? 'green' : 'red'}
-                      title={validationResult.status === 'VALID' ? 'Sucesso' : 'Atenção'}
-                      description={validationResult.message}
-                      icon={<AlertCircleIcon />}
-                    />
-                  </div>
-                )}
               </TabsContent>
             </Tabs>
+
+            {validationResult.status !== 'NONE' && (
+              <div className="mt-4 w-full">
+                <AlertCard 
+                  color={validationResult.status === 'VALID' ? 'green' : 'red'}
+                  title={validationResult.status === 'VALID' ? 'Sucesso' : 'Atenção'}
+                  description={validationResult.message}
+                  icon={<AlertCircleIcon />}
+                />
+              </div>
+            )}
           </div>
         )}
       </div>
