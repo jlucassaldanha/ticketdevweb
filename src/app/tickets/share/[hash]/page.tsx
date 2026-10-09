@@ -30,7 +30,7 @@ export default function ShareTicketPage() {
         </div>
       )}
 
-      <div className='w-full'>
+      <div>
         {ticket && (
           <TicketCard
             title={ticket.event.title || "Titulo"}
