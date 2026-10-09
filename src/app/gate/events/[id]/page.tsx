@@ -86,6 +86,17 @@ export default function GateEventPage() {
           </div>
         ) : (
           <div className='w-full'>
+            {validationResult.status !== 'NONE' && (
+              <div className="mt-4 w-full">
+                <AlertCard 
+                  color={validationResult.status === 'VALID' ? 'green' : 'red'}
+                  title={validationResult.status === 'VALID' ? 'Sucesso' : 'Atenção'}
+                  description={validationResult.message}
+                  icon={<AlertCircleIcon />}
+                />
+              </div>
+            )}
+            
             <Tabs defaultValue="camera" className="w-full">
               <TabsList variant="line">
                 <TabsTrigger value="camera">Camera</TabsTrigger>
@@ -168,17 +179,6 @@ export default function GateEventPage() {
                 </Card>
               </TabsContent>
             </Tabs>
-
-            {validationResult.status !== 'NONE' && (
-              <div className="mt-4 w-full">
-                <AlertCard 
-                  color={validationResult.status === 'VALID' ? 'green' : 'red'}
-                  title={validationResult.status === 'VALID' ? 'Sucesso' : 'Atenção'}
-                  description={validationResult.message}
-                  icon={<AlertCircleIcon />}
-                />
-              </div>
-            )}
           </div>
         )}
       </div>
