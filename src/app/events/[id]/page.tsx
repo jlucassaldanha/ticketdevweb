@@ -9,7 +9,8 @@ import { SeatSelectionCard } from "@/components/my-components/SeatSelectionCard"
 import { Button } from "@/components/ui/button";
 import useEventDetails from "@/hooks/useEventDetails";
 import useSeatSelection from "@/hooks/useSeatSelection";
-import { AlertCircleIcon } from "lucide-react";
+import { AlertCircleIcon, ArrowLeft } from "lucide-react";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 
 export default function EventPage() {
@@ -27,7 +28,14 @@ export default function EventPage() {
   } = useSeatSelection(event);
 
   return (
-    <div className="flex flex-col gap-10 justify-center items-center p-10">
+    <div className="flex flex-col gap-10 justify-center items-center p-5">
+      <div className="w-full">
+        <Link href="/" className="flex gap-2">
+          <ArrowLeft />
+          Voltar para os eventos
+        </Link>
+      </div>
+
       <div className="text-3xl font-bold w-full">{event?.title}</div>
 
       <div className="flex flex-col md:flex-row gap-5">

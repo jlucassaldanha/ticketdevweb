@@ -4,7 +4,8 @@ import { AlertCard } from '@/components/my-components/AlertCard';
 import { TicketCard, TicketCardSkeleton } from '@/components/my-components/TicketCard';
 import { useAuth } from '@/contexts/authContext';
 import useTickets from '@/hooks/useTickets';
-import { AlertCircleIcon } from 'lucide-react';
+import { AlertCircleIcon, ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 export default function TicketsPage() {
@@ -29,7 +30,14 @@ export default function TicketsPage() {
    } = useTickets()
 
   return (
-    <div className='flex flex-col gap-5 justify-center items-center p-10'>
+    <div className='flex flex-col gap-5 justify-center items-center p-5'>
+      <div className="w-full">
+        <Link href="/" className="flex gap-2">
+          <ArrowLeft />
+          Voltar para os eventos
+        </Link>
+      </div>
+
       <div className='text-3xl font-bold w-full'>
         Meus ingressos
       </div>

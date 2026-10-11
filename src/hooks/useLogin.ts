@@ -25,9 +25,25 @@ export default function useLogin() {
 
   const { mutate, isPending } = useMutation({
     mutationFn: (credentials: LoginCredentials) => loginAction(credentials.email, credentials.password),
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['login'] })
-      router.push('/')
+      
+      if (!data || !data.user) {
+        router.push('/')
+        return
+      }
+      
+      const role = data.user.role
+
+      if (role === 'VALIDATOR') {
+        router.push('/gate')
+      } else if ( role === 'ORGANIZER') {
+        router.push('/organizer')
+      } else if (role === 'CONSUMER') {
+        router.push('/tickets')
+      } else {
+        router.push('/')
+      }
     },
     onError: (error) => {
       toast.error("Erro ao acessar.", { description: error.message || "Verfique suas credenciais e tente novamente."})
