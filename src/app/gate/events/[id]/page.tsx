@@ -14,7 +14,8 @@ import { useAuth } from "@/contexts/authContext";
 import { useCameraScanner } from '@/hooks/useCameraScanner';
 import useEventDetails from "@/hooks/useEventDetails";
 import { useValidateTicket } from '@/hooks/useValidateTicket';
-import { AlertCircleIcon, QrCode } from "lucide-react";
+import { AlertCircleIcon, ArrowLeft, QrCode } from "lucide-react";
+import Link from "next/link";
 import { redirect, useParams } from "next/navigation";
 import { Controller } from 'react-hook-form';
 
@@ -48,9 +49,16 @@ export default function GateEventPage() {
   } = useCameraScanner({ onScan: validateTicket })
 
   return (
-    <div className="flex flex-col gap-5 justify-center items-center p-10">
+    <div className="flex flex-col gap-5 justify-center items-center p-5">
+      <div className="w-full">
+        <Link href="/gate" className="flex gap-2">
+          <ArrowLeft />
+          Voltar para os eventos
+        </Link>
+      </div>
+      
       {!event || isLoading ? (
-        <div className='w-150 flex flex-col gap-5'>
+        <div className='w-full flex flex-col gap-5'>
           <Skeleton className="h-10 w-3/4"/>
 
           <Skeleton className="h-4 w-1/3" />
@@ -58,7 +66,7 @@ export default function GateEventPage() {
           <Skeleton className="h-4 w-2/3" />
         </div>
       ) : (
-        <div>
+        <div className="w-full">
           <div className="text-3xl font-bold w-full pb-5">{event?.title}</div>
 
           <div className='w-full'><EventDate date={new Date(event?.date || new Date()).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })} /></div>
@@ -122,8 +130,8 @@ export default function GateEventPage() {
 
                     <p>
                       {isCameraActive
-                        ? 'Aponte a câmara traseira para o QR Code do ingresso.'
-                        : 'Clique no botão abaixo para ligar a câmara e escanear o bilhete.'}
+                        ? 'Aponte a câmera traseira para o QR Code do ingresso.'
+                        : 'Clique no botão abaixo para ligar a câmera e escanear o bilhete.'}
                     </p>
                   </CardContent>
 
