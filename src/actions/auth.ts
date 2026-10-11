@@ -43,7 +43,7 @@ export async function loginAction(email: string, password: string) {
       maxAge: 60 * 60 * 24 * 7
     })
 
-    redirect('/')
+    return { success: true, user: response.user };
   } catch (error) {
     console.error(error)
   }
