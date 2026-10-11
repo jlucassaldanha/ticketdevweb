@@ -1,24 +1,18 @@
 "use client";
 
 import { AlertCard } from "@/components/my-components/AlertCard";
+import { CameraValidatorCard } from "@/components/my-components/CameraValidatorCard";
 import EventDate from '@/components/my-components/EventDate';
 import EventLocation from '@/components/my-components/EventLocation';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Field, FieldError } from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { ManualValidatorCard } from "@/components/my-components/ManualValidatorCard";
 import { Skeleton } from '@/components/ui/skeleton';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from "@/contexts/authContext";
 import { useCameraScanner } from '@/hooks/useCameraScanner';
 import useEventDetails from "@/hooks/useEventDetails";
 import { useValidateTicket } from '@/hooks/useValidateTicket';
-import { AlertCircleIcon, ArrowLeft, QrCode } from "lucide-react";
+import { AlertCircleIcon, ArrowLeft} from "lucide-react";
 import Link from "next/link";
 import { redirect, useParams } from "next/navigation";
-import { Controller } from 'react-hook-form';
-
 export default function GateEventPage() {
   const auth = useAuth();
 
@@ -56,7 +50,7 @@ export default function GateEventPage() {
           Voltar para os eventos
         </Link>
       </div>
-      
+
       {!event || isLoading ? (
         <div className='w-full flex flex-col gap-5'>
           <Skeleton className="h-10 w-3/4"/>
@@ -76,7 +70,7 @@ export default function GateEventPage() {
       )}
       
 
-      <div className="flex flex-col gap-5 w-full md:w-1/3 items-center justify-center">
+      <div className="flex flex-col gap-5 w-full items-center justify-center">
         {error && (
           <div>
             <AlertCard
@@ -104,89 +98,24 @@ export default function GateEventPage() {
                 />
               </div>
             )}
-            
-            <Tabs defaultValue="camera" className="w-full">
-              <TabsList variant="line">
-                <TabsTrigger value="camera">Camera</TabsTrigger>
-                <TabsTrigger value="manual">Manual</TabsTrigger>
-              </TabsList>
-              <TabsContent value="camera">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Validar com Câmera</CardTitle>
-                  </CardHeader>
 
-                  <CardContent>
-                    {isCameraActive ? (
-                      <div 
-                        id="qr-reader" 
-                        className="w-full max-w-[320px] rounded-xl overflow-hidden border border-zinc-700 [&_video]:rounded-xl" 
-                      />
-                    ) : (
-                      <div className="flex flex-col items-center justify-center py-10 text-primary">
-                        <QrCode className="w-16 h-16 mb-2 animate-pulse" />
-                      </div>
-                    )}
-
-                    <p>
-                      {isCameraActive
-                        ? 'Aponte a câmera traseira para o QR Code do ingresso.'
-                        : 'Clique no botão abaixo para ligar a câmera e escanear o bilhete.'}
-                    </p>
-                  </CardContent>
-
-                  <CardFooter>
-                    <Button 
-                      variant={isCameraActive ? "destructive" : "default"} 
-                      onClick={toggleCamera}
-                      className="w-full"
-                    >
-                      {isCameraActive ? 'Desligar Câmera' : 'Ligar Câmera'}
-                    </Button>
-                  </CardFooter>
-                </Card>
-              </TabsContent>
-
-              <TabsContent value="manual">
-                <Card >
-                  <CardHeader>
-                    <CardTitle>Validação Manual</CardTitle>
-                    <CardDescription>
-                      Digite ou cole o Hash do Ingresso (`secureHash`) abaixo:
-                    </CardDescription>
-                  </CardHeader>
-
-                  <form id='validate-form' onSubmit={handleSubmit(onSubmit)}>
-                    <CardContent className='max-w-100 flex flex-col gap-3'>
-                      <Controller 
-                        name='hash'
-                        control={control}
-                        render={({ field, fieldState }) => (
-                          <Field data-invalid={fieldState.invalid}>
-                            <Label htmlFor='hash'>Hash</Label>
-                            <Input 
-                              {...field}
-                              id="hash" 
-                              aria-invalid={fieldState.invalid}
-                              placeholder='Hash do Ingresso'
-                            />
-                            {fieldState.invalid && (
-                              <FieldError errors={[fieldState.error]} />
-                            )}
-                          </Field>
-                        )}
-                      />
-                    </CardContent>
-                  </form>
-                  
-                  <CardFooter>
-                    <Button className='w-full' type='submit' form='validate-form' disabled={isPending} >
-                      {!isPending ? 'Validar Ingresso' : 'Validando...'}
-                    </Button>
-                  </CardFooter>
-                </Card>
-              </TabsContent>
-            </Tabs>
+            <div className="w-full flex flex-col md:flex-row gap-5">
+              <div className="w-full">
+                <CameraValidatorCard 
+                  isCameraActive={isCameraActive} 
+                  toggleCamera={toggleCamera} 
+                />
+              </div>
+              
+              <div className="w-full">
+                <ManualValidatorCard 
+                  isPending={isPending}
+                  control={control}
+                  handleSubmit={handleSubmit}
+                  onSubmit={onSubmit}
+                />
+              </div>
+            </div>
           </div>
         )}
       </div>
