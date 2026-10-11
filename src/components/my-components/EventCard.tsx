@@ -1,4 +1,4 @@
-import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { TicketEvent } from '@/types/event';
 import Image from 'next/image';
 import { Badge } from '../ui/badge';
@@ -20,12 +20,10 @@ export function EventCard({ event, gateBanner }: { event: TicketEvent, gateBanne
           alt={event.title}
           className="relative z-20 w-full object-cover aspect-square"
         />
-        <CardHeader>
-          <CardAction>
-            <Badge variant="secondary">{event.category}</Badge>
-          </CardAction>
-          
-          <CardTitle>{event.title}</CardTitle>
+
+        <CardHeader className='flex flex-col gap-2'>    
+          <CardTitle className="text-xl font-bold leading-tight">{event.title}</CardTitle>
+          <Badge variant="secondary" className="shrink-0">{event.category}</Badge>
         </CardHeader>
 
         <CardContent>
