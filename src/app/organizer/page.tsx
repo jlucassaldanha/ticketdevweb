@@ -1,6 +1,7 @@
 "use client"
 
 import { useAuth } from "@/contexts/authContext"
+import useListMyEvents from '@/hooks/useListMyEvents'
 import { redirect } from "next/navigation"
 
 export default function OrganizerPage() {
@@ -14,6 +15,16 @@ export default function OrganizerPage() {
     redirect('/')
   }
 
+  const {
+    isPending,
+    isError,
+    filteredEvents,
+    categories,
+    categoryOptions,
+    control,
+    handleSubmit,
+  } = useListMyEvents()
+
   return (
     <div className='flex flex-col gap-5 justify-center items-center p-10'>
       <div className='text-3xl font-bold w-full'>
@@ -22,6 +33,14 @@ export default function OrganizerPage() {
 
       <div className='w-full'>
         Crie e organize seus eventos por aqui
+      </div>
+
+      <div>
+        {filteredEvents.map((event) => (
+          <div key={event.id}>
+            {event.title}
+          </div>
+        ))}
       </div>
     </div>
   )

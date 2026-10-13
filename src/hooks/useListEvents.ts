@@ -43,10 +43,6 @@ export default function useListEvents() {
     return matchesSearch && matchesCategory;
   });
 
-  function onSubmit(data: SearchFormData) {
-    
-  }
-
   return {
     isPending,
     isError,
@@ -54,7 +50,6 @@ export default function useListEvents() {
     categories,
     categoryOptions,
     control,
-    handleSubmit,
-    onSubmit
+    handleSubmit
   }
 }
