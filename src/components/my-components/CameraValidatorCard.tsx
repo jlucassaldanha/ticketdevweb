@@ -10,7 +10,7 @@ interface CameraValidatorCardProps {
 
 export function CameraValidatorCard({ isCameraActive, toggleCamera }: CameraValidatorCardProps) {
   return (
-    <Card>
+    <Card className='h-full flex flex-col justify-between'>
       <CardHeader>
         <CardTitle>Validar com Câmera</CardTitle>
       </CardHeader>
@@ -49,7 +49,7 @@ export function CameraValidatorCard({ isCameraActive, toggleCamera }: CameraVali
 
 export function CameraValidatorCardSkeleton() {
   return (
-    <Card>
+    <Card className='h-full flex flex-col justify-between'>
       <CardHeader>
         <Skeleton className='h-5 w-2/4'/>
       </CardHeader>

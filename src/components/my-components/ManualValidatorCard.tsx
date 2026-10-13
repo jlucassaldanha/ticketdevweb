@@ -19,7 +19,7 @@ interface ManualValidatorCardProps {
 
 export function ManualValidatorCard({ isPending, control, handleSubmit, onSubmit}: ManualValidatorCardProps) {
   return (
-    <Card>
+    <Card className='h-full flex flex-col justify-between'>
       <CardHeader>
         <CardTitle>Validação Manual</CardTitle>
         <CardDescription>
@@ -61,7 +61,7 @@ export function ManualValidatorCard({ isPending, control, handleSubmit, onSubmit
 
 export function ManualValidatorCardSkeleton() {
   return (
-    <Card>
+    <Card className='h-full flex flex-col justify-between'>
       <CardHeader>
         <Skeleton className='h-4 w-2/4'/>
 
