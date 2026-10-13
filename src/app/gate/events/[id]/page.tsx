@@ -1,10 +1,10 @@
 "use client";
 
 import { AlertCard } from "@/components/my-components/AlertCard";
-import { CameraValidatorCard } from "@/components/my-components/CameraValidatorCard";
+import { CameraValidatorCard, CameraValidatorCardSkeleton } from "@/components/my-components/CameraValidatorCard";
 import EventDate from '@/components/my-components/EventDate';
 import EventLocation from '@/components/my-components/EventLocation';
-import { ManualValidatorCard } from "@/components/my-components/ManualValidatorCard";
+import { ManualValidatorCard, ManualValidatorCardSkeleton } from "@/components/my-components/ManualValidatorCard";
 import { Skeleton } from '@/components/ui/skeleton';
 import { useAuth } from "@/contexts/authContext";
 import { useCameraScanner } from '@/hooks/useCameraScanner';
@@ -83,8 +83,14 @@ export default function GateEventPage() {
         )}
 
         {!event || isLoading ? (
-          <div>
-            <Skeleton className='h-80 w-100'/>
+          <div className="w-full flex flex-col md:flex-row gap-5">
+            <div className='w-full'>
+              <CameraValidatorCardSkeleton />
+            </div>
+
+            <div className='w-full'>
+              <ManualValidatorCardSkeleton />
+            </div>
           </div>
         ) : (
           <div className='w-full'>
