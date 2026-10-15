@@ -8,7 +8,13 @@ import { Skeleton } from '../ui/skeleton';
 import EventDate from './EventDate';
 import EventLocation from './EventLocation';
 
-export function EventCard({ event, gateBanner, isOrganizerBanner }: { event: TicketEvent, gateBanner?: boolean, isOrganizerBanner?: boolean }) {
+interface EventCardProps { 
+  event: TicketEvent, 
+  gateBanner?: boolean, 
+  isOrganizerBanner?: boolean 
+}
+
+export function EventCard({ event, gateBanner, isOrganizerBanner }: EventCardProps) {
   return (
     <Link href={gateBanner ? `/gate/events/${event.id}` : isOrganizerBanner ? `/organizer/events/${event.id}` : `/events/${event.id}`} >
       <Card key={event.id} className='h-full flex flex-col justify-between'>
