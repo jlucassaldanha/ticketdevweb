@@ -61,7 +61,7 @@ export default function OrganizerPage() {
           
           <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5'>
             {filteredEvents.map(event => (
-              <EventCard key={event.id} event={event} />
+              <EventCard key={event.id} event={event} isOrganizerBanner />
             ))}
           </div>
         </div>
