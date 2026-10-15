@@ -4,6 +4,8 @@ import { EventCard, EventCardSkeleton } from '@/components/my-components/EventCa
 import SearchCard from '@/components/my-components/SearchCard'
 import { useAuth } from "@/contexts/authContext"
 import useListMyEvents from '@/hooks/useListMyEvents'
+import { PlusIcon } from 'lucide-react'
+import Link from 'next/link'
 import { redirect } from "next/navigation"
 
 export default function OrganizerPage() {
@@ -35,6 +37,15 @@ export default function OrganizerPage() {
       </div>
 
       <div className='flex flex-col gap-6 w-full'>
+        <div className='w-full flex justify-end'>
+          <Link 
+            className='flex gap-1 bg-primary p-2 text-primary-foreground rounded-3xl' 
+            href="/organizer/create"
+          >
+            Criar Evento
+            <PlusIcon />
+          </Link>
+        </div>
         <SearchCard 
           control={control} 
           categoryOptions={categoryOptions} 
