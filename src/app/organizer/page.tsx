@@ -1,5 +1,7 @@
 "use client"
 
+import { EventCard, EventCardSkeleton } from '@/components/my-components/EventCard'
+import SearchCard from '@/components/my-components/SearchCard'
 import { useAuth } from "@/contexts/authContext"
 import useListMyEvents from '@/hooks/useListMyEvents'
 import { redirect } from "next/navigation"
@@ -17,12 +19,9 @@ export default function OrganizerPage() {
 
   const {
     isPending,
-    isError,
     filteredEvents,
-    categories,
     categoryOptions,
-    control,
-    handleSubmit,
+    control
   } = useListMyEvents()
 
   return (
@@ -35,12 +34,37 @@ export default function OrganizerPage() {
         Crie e organize seus eventos por aqui
       </div>
 
-      <div>
-        {filteredEvents.map((event) => (
-          <div key={event.id}>
-            {event.title}
+      <div className='flex flex-col gap-6 w-full'>
+        <SearchCard 
+          control={control} 
+          categoryOptions={categoryOptions} 
+        />
+
+        <div className='flex flex-col gap-5'>
+          <span className='font-bold text-lg'>Eventos</span>
+          {isPending && (
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5'>
+              <EventCardSkeleton />
+              <EventCardSkeleton />
+              <EventCardSkeleton />
+              <EventCardSkeleton />
+            </div>
+          )}
+
+          {filteredEvents.length === 0 && !isPending && (
+            <span className='text-gray-500'>Nenhum evento encontrado.</span>
+          )}
+
+          {filteredEvents.length > 0 && (
+            <span className='text-gray-500'>{filteredEvents.length} evento(s) encontrado(s).</span>
+          )}
+          
+          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5'>
+            {filteredEvents.map(event => (
+              <EventCard key={event.id} event={event} />
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </div>
   )

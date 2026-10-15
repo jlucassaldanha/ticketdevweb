@@ -34,7 +34,7 @@ export function EventCard({ event, gateBanner }: { event: TicketEvent, gateBanne
 
         <CardContent className='flex flex-col gap-1'>
           <EventDate 
-            date={new Date(event.date).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })} 
+            date={new Date(event.date).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })} 
           />
 
           <EventLocation location={event.location} />

@@ -69,7 +69,7 @@ export default function TicketsPage() {
           <div key={ticket.id} className='flex flex-col h-full'>
             <TicketCard
               title={ticket.event.title}
-              date={new Date(ticket.event.date).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+              date={new Date(ticket.event.date).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
               location={ticket.event.location}
               seat={ticket.seatNumber || "Pista"}
               status={ticket.status === "ACTIVE" ? "Ativo" : ticket.status === "USED" ? "Utilizado" : "Cancelado"}
