@@ -21,3 +21,12 @@ export async function filterEventByIdAction(id: string) {
     throw error;
   }
 } 
+
+export async function listMyEventsAction() {
+  try {
+    return await apiFetch<TicketEvent[]>('/api/events/my-events')
+  } catch (error) {
+    console.error('Error fetching events:', error);
+    throw error;
+  }
+}

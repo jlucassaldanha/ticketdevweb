@@ -4,6 +4,7 @@ import { Field, FieldError } from "../ui/field";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { Skeleton } from '../ui/skeleton';
 
 export interface ValidationFormData {
   hash: string;
@@ -18,7 +19,7 @@ interface ManualValidatorCardProps {
 
 export function ManualValidatorCard({ isPending, control, handleSubmit, onSubmit}: ManualValidatorCardProps) {
   return (
-    <Card>
+    <Card className='h-full flex flex-col justify-between'>
       <CardHeader>
         <CardTitle>Validação Manual</CardTitle>
         <CardDescription>
@@ -53,6 +54,28 @@ export function ManualValidatorCard({ isPending, control, handleSubmit, onSubmit
         <Button className='w-full' type='submit' form='validate-form' disabled={isPending} >
           {!isPending ? 'Validar Ingresso' : 'Validando...'}
         </Button>
+      </CardFooter>
+    </Card>
+  )
+}
+
+export function ManualValidatorCardSkeleton() {
+  return (
+    <Card className='h-full flex flex-col justify-between'>
+      <CardHeader>
+        <Skeleton className='h-4 w-2/4'/>
+
+        <Skeleton className='h-4 w-3/4'/>
+      </CardHeader>
+
+        <CardContent className='max-w-100 flex flex-col gap-3'>
+          <Skeleton className='h-4 w-1/4'/>
+
+          <Skeleton className='h-8 w-3/4'/>
+        </CardContent>
+      
+      <CardFooter>
+        <Skeleton className='h-8 w-full'/>
       </CardFooter>
     </Card>
   )

@@ -8,9 +8,9 @@ import { Skeleton } from '../ui/skeleton';
 import EventDate from './EventDate';
 import EventLocation from './EventLocation';
 
-export function EventCard({ event, gateBanner }: { event: TicketEvent, gateBanner?: boolean }) {
+export function EventCard({ event, gateBanner, isOrganizerBanner }: { event: TicketEvent, gateBanner?: boolean, isOrganizerBanner?: boolean }) {
   return (
-    <Link href={gateBanner ? `/gate/events/${event.id}` : `/events/${event.id}`} >
+    <Link href={gateBanner ? `/gate/events/${event.id}` : isOrganizerBanner ? `/organizer/events/${event.id}` : `/events/${event.id}`} >
       <Card key={event.id} className='h-full flex flex-col justify-between'>
         <div className="absolute" />
         <Image
@@ -34,12 +34,18 @@ export function EventCard({ event, gateBanner }: { event: TicketEvent, gateBanne
 
         <CardContent className='flex flex-col gap-1'>
           <EventDate 
-            date={new Date(event.date).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })} 
+            date={new Date(event.date).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })} 
           />
 
           <EventLocation location={event.location} />
         </CardContent>
 
+        {isOrganizerBanner && (
+          <CardContent>
+            <span className='font-bold'>Ingressos Vendidos: {event.ticketsSold} de {event.capacity}</span>
+          </CardContent>
+        )}
+        
         {!gateBanner && (
           <CardContent className='flex items-center justify-center'>
             <span className='font-bold text-lg'>R$ {event.price.toFixed(2).replace('.', ',')}</span>

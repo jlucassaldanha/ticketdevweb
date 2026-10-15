@@ -1,6 +1,7 @@
 import { QrCode } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
+import { Skeleton } from '../ui/skeleton';
 
 interface CameraValidatorCardProps {
   isCameraActive: boolean
@@ -9,7 +10,7 @@ interface CameraValidatorCardProps {
 
 export function CameraValidatorCard({ isCameraActive, toggleCamera }: CameraValidatorCardProps) {
   return (
-    <Card>
+    <Card className='h-full flex flex-col justify-between'>
       <CardHeader>
         <CardTitle>Validar com Câmera</CardTitle>
       </CardHeader>
@@ -22,7 +23,7 @@ export function CameraValidatorCard({ isCameraActive, toggleCamera }: CameraVali
           />
         ) : (
           <div className="flex flex-col items-center justify-center py-10 text-primary">
-            <QrCode className="w-16 h-16 mb-2 animate-pulse" />
+            <QrCode className="w-16 h-16 mb-2" />
           </div>
         )}
 
@@ -41,6 +42,28 @@ export function CameraValidatorCard({ isCameraActive, toggleCamera }: CameraVali
         >
           {isCameraActive ? 'Desligar Câmera' : 'Ligar Câmera'}
         </Button>
+      </CardFooter>
+    </Card>
+  )
+}
+
+export function CameraValidatorCardSkeleton() {
+  return (
+    <Card className='h-full flex flex-col justify-between'>
+      <CardHeader>
+        <Skeleton className='h-5 w-2/4'/>
+      </CardHeader>
+
+      <CardContent>  
+        <div className="flex flex-col items-center justify-center py-10 text-primary">
+          <Skeleton className='h-16 w-16'/>
+        </div>
+
+        <Skeleton className='h-4 w-3/4'/>
+      </CardContent>
+
+      <CardFooter>
+        <Skeleton className='h-8 w-full'/>
       </CardFooter>
     </Card>
   )

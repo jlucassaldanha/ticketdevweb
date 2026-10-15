@@ -30,7 +30,7 @@ export async function loginAction(email: string, password: string) {
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
-      maxAge: 60 * 60 * 24 * 7
+      maxAge: 60 * 60 * 24 * 1
     })
 
     ;(await cookies()).set({
@@ -40,7 +40,7 @@ export async function loginAction(email: string, password: string) {
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
-      maxAge: 60 * 60 * 24 * 7
+      maxAge: 60 * 60 * 24 * 1
     })
 
     return { success: true, user: response.user };

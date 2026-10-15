@@ -34,7 +34,7 @@ export default function ShareTicketPage() {
         {ticket && (
           <TicketCard
             title={ticket.event.title || "Titulo"}
-            date={new Date(ticket.event.date).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+            date={new Date(ticket.event.date).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
             location={ticket.event.location || "Localização"}
             seat={ticket.seatNumber || "Lugar"}
             status={ticket.status === "ACTIVE" ? "Ativo" : ticket.status === "USED" ? "Utilizado" : "Cancelado"}
