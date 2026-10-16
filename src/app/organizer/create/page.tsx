@@ -1,7 +1,7 @@
 "use client"
 
 import SearchTMDBCard from '@/components/my-components/SearchTMDBCard';
-import TMDBMovieCard from '@/components/my-components/TMDBMovieCard';
+import { TMDBMovieCard, TMDBMovieCardSkeleton } from '@/components/my-components/TMDBMovieCard';
 import useSearchTMDB from '@/hooks/useSearchTMDB';
 
 export default function CreatePage() {
@@ -18,19 +18,31 @@ export default function CreatePage() {
       </div>
 
       <div className='w-full'>
-        <SearchTMDBCard control={control} onSubmit={handleSubmit(onSubmit)}/>
-      </div>
-
-      <div className='flex flex-col gap-5'>
-        {isFetching ? (
-          <span>carregando</span>
-        ) 
-          :  
-          tmdbMovies.map((movie) => (
-          <div key={movie.id}>
-            <TMDBMovieCard movie={movie} />
+        <div className='w-full flex flex-col gap-5'>
+          <div className='w-full'>
+            <SearchTMDBCard control={control} onSubmit={handleSubmit(onSubmit)}/>
           </div>
-        ))}
+
+          <div className='flex flex-col gap-5'>
+            {isFetching ? (
+              <div>
+                <TMDBMovieCardSkeleton />
+                <TMDBMovieCardSkeleton />
+                <TMDBMovieCardSkeleton />
+              </div>
+            ) 
+              :  
+              tmdbMovies.map((movie) => (
+              <div key={movie.id}>
+                <TMDBMovieCard movie={movie} />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div>
+
+        </div>
       </div>
     </div>
   )

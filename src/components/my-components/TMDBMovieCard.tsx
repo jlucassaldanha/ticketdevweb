@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { TMDbMovie } from '@/types/tmdb';
+import { Skeleton } from '../ui/skeleton';
 
-export default function TMDBMovieCard({ movie }: { movie: TMDbMovie }) {
+export function TMDBMovieCard({ movie }: { movie: TMDbMovie }) {
   return (
     <Card className='flex flex-row items-center overflow-hidden max-w-xl w-full'>
       <div className='relative w-40 h-40 shrink-0'>
@@ -27,6 +28,30 @@ export default function TMDBMovieCard({ movie }: { movie: TMDbMovie }) {
         
           <CardDescription className='text-xs line-clamp-3 mt-1'>
             {movie.overview}
+          </CardDescription>
+        </CardContent>
+      </div>
+    </Card>
+  )
+}
+
+export function TMDBMovieCardSkeleton() {
+  return (
+    <Card className='flex flex-row items-center overflow-hidden max-w-xl w-full'>
+      <Skeleton className='w-40 h-40'/>
+      
+      <div className='flex flex-col flex-1 p-4 justify-between'>
+        <CardHeader className='p-0 pb-2'>
+          <Skeleton className='h-4 w-3/4'/>
+        </CardHeader>
+
+        <CardContent className='p-0 flex flex-col gap-1'>
+          <Skeleton className='h-2 w-1/4'/>
+        
+          <CardDescription className='text-xs line-clamp-3 mt-1'>
+            <Skeleton className='h-2 w-full mb-1'/>
+            <Skeleton className='h-2 w-full mb-1'/>
+            <Skeleton className='h-2 w-3/4'/>
           </CardDescription>
         </CardContent>
       </div>
