@@ -16,6 +16,7 @@ interface SearchCardProps {
   }>;
   categoryOptions: { label: string, value: string }[];
 }
+
 export default function SearchCard({ control, categoryOptions }: SearchCardProps) {
   return (
     <Card>
