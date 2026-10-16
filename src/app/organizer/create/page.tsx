@@ -1,12 +1,38 @@
 "use client"
 
+import { CreateEventFormCard } from '@/components/my-components/CreateEventFormCard';
 import SearchTMDBCard from '@/components/my-components/SearchTMDBCard';
 import { TMDBMovieCard, TMDBMovieCardSkeleton } from '@/components/my-components/TMDBMovieCard';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Field, FieldError } from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { useAuth } from '@/contexts/authContext';
 import { useCreateEvent } from '@/hooks/useCreateEvent';
 import useSearchTMDB from '@/hooks/useSearchTMDB';
+import { redirect } from 'next/navigation';
+import { Controller } from 'react-hook-form';
 
 export default function CreatePage() {
-  const { isFetching, tmdbMovies, control, handleSubmit, onSubmit, clearSearch } = useSearchTMDB()
+  const auth = useAuth()
+      
+  if (!auth.token) {
+    redirect('/login')
+  }
+
+  if (auth.user?.role !== 'ORGANIZER') {
+    redirect('/')
+  }
+
+  const { 
+    isFetching, 
+    tmdbMovies, 
+    control, 
+    handleSubmit, 
+    onSubmit, 
+    clearSearch 
+  } = useSearchTMDB()
 
   const {
     handleSelectMovie,
@@ -25,7 +51,7 @@ export default function CreatePage() {
         Crie e organize seus eventos por aqui
       </div>
 
-      <div className='w-full'>
+      <div className='w-full flex gap-10'>
         <div className='w-full flex flex-col gap-5'>
           <div className='w-full'>
             <SearchTMDBCard control={control} onSubmit={handleSubmit(onSubmit)}/>
@@ -51,8 +77,11 @@ export default function CreatePage() {
           </div>
         </div>
 
-        <div>
-
+        <div className='w-full'>
+          <CreateEventFormCard 
+            control={eventControl}
+            onSubmit={handleEventSubmit(onEventSubmit)}
+          />
         </div>
       </div>
     </div>

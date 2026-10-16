@@ -10,6 +10,8 @@ const eventFormSchema = z.object({
   imageUrl: z.string().url('URL da imagem inválida'),
   date: z.string().min(1, 'A data é obrigatória'),
   location: z.string().min(1, 'O local é obrigatório'),
+  capacity: z.number().min(1, 'O valor mínimo deve ser 1'),
+  price: z.number().min(0, 'O valor não pode ser negativo')
 })
 
 export type EventFormData = z.infer<typeof eventFormSchema>
@@ -22,6 +24,8 @@ export function useCreateEvent(onClearSearch: () => void) {
       description: '',
       category: 'Cinema',
       imageUrl: '',
+      capacity: 1,
+      price: 0
     }
   });
 
