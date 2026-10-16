@@ -15,7 +15,7 @@ type SearchFormData = z.infer<typeof formSchema>
 export default function useSearchTMDB() {
   const [submittedSearch, setSubmittedSearch] = useState('');
 
-  const { control, handleSubmit } = useForm<SearchFormData>({
+  const { control, handleSubmit, reset } = useForm<SearchFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       searchtmdb: ''
@@ -35,12 +35,18 @@ export default function useSearchTMDB() {
     setSubmittedSearch(data.searchtmdb)
   }
 
+  const clearSearch = () => {
+    setSubmittedSearch('');
+    reset();
+  }
+
   return {
     isFetching,
     isError,
     tmdbMovies,
     control,
     handleSubmit,
-    onSubmit
+    onSubmit,
+    clearSearch
   }
 }

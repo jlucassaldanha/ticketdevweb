@@ -2,10 +2,18 @@
 
 import SearchTMDBCard from '@/components/my-components/SearchTMDBCard';
 import { TMDBMovieCard, TMDBMovieCardSkeleton } from '@/components/my-components/TMDBMovieCard';
+import { useCreateEvent } from '@/hooks/useCreateEvent';
 import useSearchTMDB from '@/hooks/useSearchTMDB';
 
 export default function CreatePage() {
-  const { isFetching, tmdbMovies, control, handleSubmit, onSubmit} = useSearchTMDB()
+  const { isFetching, tmdbMovies, control, handleSubmit, onSubmit, clearSearch } = useSearchTMDB()
+
+  const {
+    handleSelectMovie,
+    eventControl,
+    handleEventSubmit,
+    onEventSubmit
+  } = useCreateEvent(clearSearch)
 
   return (
     <div className='flex flex-col gap-5 justify-center items-center p-10'>
@@ -22,21 +30,24 @@ export default function CreatePage() {
           <div className='w-full'>
             <SearchTMDBCard control={control} onSubmit={handleSubmit(onSubmit)}/>
           </div>
+          
+            {isFetching && (
+              <div className='flex flex-col gap-5'>
+                <TMDBMovieCardSkeleton />
+                <TMDBMovieCardSkeleton />
+                <TMDBMovieCardSkeleton />
+              </div>
+            )}
 
-          <div className='flex flex-col gap-5'>
-            {isFetching ? (
-              <div>
-                <TMDBMovieCardSkeleton />
-                <TMDBMovieCardSkeleton />
-                <TMDBMovieCardSkeleton />
-              </div>
-            ) 
-              :  
-              tmdbMovies.map((movie) => (
-              <div key={movie.id}>
-                <TMDBMovieCard movie={movie} />
-              </div>
-            ))}
+            <div className='flex flex-col gap-5'>
+              {tmdbMovies.map((movie) => (
+                <div key={movie.id}>
+                  <TMDBMovieCard 
+                    movie={movie} 
+                    onSelectMovie={handleSelectMovie}
+                  />
+                </div>
+              ))}
           </div>
         </div>
 

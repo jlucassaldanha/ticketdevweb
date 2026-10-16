@@ -3,9 +3,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui
 import { TMDbMovie } from '@/types/tmdb';
 import { Skeleton } from '../ui/skeleton';
 
-export function TMDBMovieCard({ movie }: { movie: TMDbMovie }) {
+export function TMDBMovieCard({ movie, onSelectMovie }: { movie: TMDbMovie, onSelectMovie: (movie: TMDbMovie) => void }) {
   return (
-    <Card className='flex flex-row items-center overflow-hidden max-w-xl w-full'>
+    <Card 
+      className='flex flex-row items-center overflow-hidden max-w-xl w-full hover:cursor-pointer' 
+      onClick={() => onSelectMovie(movie)}>
       <div className='relative w-40 h-40 shrink-0'>
         <Image
           width={200}
