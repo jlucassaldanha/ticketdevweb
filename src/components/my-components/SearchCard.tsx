@@ -5,15 +5,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Control, Controller } from 'react-hook-form';
 import { Select, SelectContent, SelectTrigger, SelectValue, SelectGroup, SelectItem } from '@/components/ui/select';
+import { SearchFormData } from '@/hooks/useListEvents';
 
 interface SearchCardProps {
-  control: Control<{
-      search: string;
-      category: string;
-  }, any, {
-      search: string;
-      category: string;
-  }>;
+  control: Control<SearchFormData>;
   categoryOptions: { label: string, value: string }[];
 }
 

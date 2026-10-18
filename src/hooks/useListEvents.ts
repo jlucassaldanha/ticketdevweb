@@ -10,7 +10,7 @@ const formSchema = z.object({
   category: z.string(),
 })
 
-type SearchFormData = z.infer<typeof formSchema>
+export type SearchFormData = z.infer<typeof formSchema>
 
 export default function useListEvents() {
   const { data: events = [], isPending, isError } = useQuery<TicketEvent[]>({

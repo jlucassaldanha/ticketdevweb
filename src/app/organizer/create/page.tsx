@@ -1,12 +1,13 @@
 "use client"
 
+import { AlertCard } from '@/components/my-components/AlertCard';
 import { CreateEventFormCard } from '@/components/my-components/CreateEventFormCard';
 import SearchTMDBCard from '@/components/my-components/SearchTMDBCard';
 import { TMDBMovieCard, TMDBMovieCardSkeleton } from '@/components/my-components/TMDBMovieCard';
 import { useAuth } from '@/contexts/authContext';
 import { useCreateEvent } from '@/hooks/useCreateEvent';
 import useSearchTMDB from '@/hooks/useSearchTMDB';
-import { ArrowLeft } from 'lucide-react';
+import { AlertCircleIcon, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
@@ -34,8 +35,14 @@ export default function CreatePage() {
     handleSelectMovie,
     eventControl,
     handleEventSubmit,
-    onEventSubmit
+    onEventSubmit,
+    isSubmittingEvent,
+    error,
+    isSuccess,
+    formState
   } = useCreateEvent(clearSearch)
+
+  const validationError = formState.errors.root?.serverError?.message
 
   return (
     <div className='flex flex-col gap-5 justify-center items-center p-10'>
@@ -54,29 +61,62 @@ export default function CreatePage() {
         Crie seus eventos por aqui
       </div>
 
+      {error && (
+        <div>
+          <AlertCard 
+            color='red'
+            title='Erro'
+            description={error.message}
+            icon={<AlertCircleIcon />}
+          />
+        </div>
+      )}
+
+      {validationError && (
+        <div>
+          <AlertCard 
+            color='red'
+            title='Erro'
+            description={validationError}
+            icon={<AlertCircleIcon />}
+          />
+        </div>
+      )}
+
+      {isSuccess && (
+        <div>
+          <AlertCard 
+            color='green'
+            title='Sucesso'
+            description="Evento criado com sucesso!"
+            icon={<AlertCircleIcon />}
+          />
+        </div>
+      )}
+
       <div className='w-full flex gap-10'>
         <div className='w-full flex flex-col gap-5'>
           <div className='w-full'>
             <SearchTMDBCard control={control} onSubmit={handleSubmit(onSubmit)}/>
           </div>
           
-            {isFetching && (
-              <div className='flex flex-col gap-5'>
-                <TMDBMovieCardSkeleton />
-                <TMDBMovieCardSkeleton />
-                <TMDBMovieCardSkeleton />
-              </div>
-            )}
-
+          {isFetching && (
             <div className='flex flex-col gap-5'>
-              {tmdbMovies.map((movie) => (
-                <div key={movie.id}>
-                  <TMDBMovieCard 
-                    movie={movie} 
-                    onSelectMovie={handleSelectMovie}
-                  />
-                </div>
-              ))}
+              <TMDBMovieCardSkeleton />
+              <TMDBMovieCardSkeleton />
+              <TMDBMovieCardSkeleton />
+            </div>
+          )}
+
+          <div className='flex flex-col gap-5'>
+            {tmdbMovies.map((movie) => (
+              <div key={movie.id}>
+                <TMDBMovieCard 
+                  movie={movie} 
+                  onSelectMovie={handleSelectMovie}
+                />
+              </div>
+            ))}
           </div>
         </div>
 
@@ -84,6 +124,7 @@ export default function CreatePage() {
           <CreateEventFormCard 
             control={eventControl}
             onSubmit={handleEventSubmit(onEventSubmit)}
+            isSubmitting={isSubmittingEvent}
           />
         </div>
       </div>

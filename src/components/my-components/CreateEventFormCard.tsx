@@ -5,30 +5,14 @@ import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 import { Button } from '../ui/button';
+import { EventFormData } from '@/hooks/useCreateEvent';
 
 interface CreateEventFormCardProps {
-  control: Control<{
-    title: string;
-    description: string;
-    category: string;
-    imageUrl: string;
-    date: string;
-    location: string;
-    capacity: number;
-    price: number;
-  }, any, {
-    title: string;
-    description: string;
-    category: string;
-    imageUrl: string;
-    date: string;
-    location: string;
-    capacity: number;
-    price: number;
-  }>
+  control: Control<EventFormData>
+  isSubmitting: boolean
   onSubmit: (e: React.SubmitEvent) => void
 }
-export function CreateEventFormCard({ control, onSubmit }: CreateEventFormCardProps) {
+export function CreateEventFormCard({ control, isSubmitting, onSubmit }: CreateEventFormCardProps) {
   return (
     <form onSubmit={onSubmit}>
       <Card>
@@ -206,8 +190,8 @@ export function CreateEventFormCard({ control, onSubmit }: CreateEventFormCardPr
         </CardContent>
 
         <CardFooter>
-          <Button type='submit'>
-            Publicar Evento
+          <Button type='submit' disabled={isSubmitting}>
+            {isSubmitting ? 'Salvando evento...' : 'Publicar Evento'}
           </Button>
         </CardFooter> 
       </Card>
