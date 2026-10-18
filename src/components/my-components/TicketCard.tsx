@@ -5,7 +5,7 @@ import { Skeleton } from '../ui/skeleton';
 import { Badge } from '../ui/badge';
 import Image from 'next/image';
 import { Button } from '../ui/button';
-import { TicketMinus, TicketX } from 'lucide-react';
+import { Share2Icon, TicketMinus, TicketX } from 'lucide-react';
 
 interface TicketCardProps {
   title: string;
@@ -75,7 +75,7 @@ export function TicketCard({
       {status !== 'Cancelado' && status !== 'Utilizado' && !isShared && (
         <CardFooter className='w-full'>
           <div className='w-full flex justify-center gap-5'>
-            <Button onClick={onShare}>Compartilhar</Button>
+            <Button onClick={onShare}><Share2Icon /></Button>
             <Button variant="destructive" onClick={onCancel} disabled={isLoadingCancel}>{isLoadingCancel ? "Cancelando..." : "Cancelar compra"}</Button>
           </div>
         </CardFooter>
