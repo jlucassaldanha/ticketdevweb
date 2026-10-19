@@ -1,8 +1,10 @@
 import { createEventAction, updateEventAction } from '@/actions/events'
+import { searchTMDBMoviesAction } from '@/actions/tmdb'
 import { TicketEvent } from '@/types/event'
 import { TMDbMovie } from '@/types/tmdb'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import z from 'zod'
 
@@ -71,41 +73,55 @@ export function useCreateEvent(onClearSearch: () => void, editingEventId?: strin
     await saveEvent(data)
   };
 
-  useQuery({
+  const { data: eventData } = useQuery({
     queryKey: ['event-edit', editingEventId],
     queryFn: () => {
       if (!editingEventId) return null
 
       const cachedEvents = queryClient.getQueryData<TicketEvent[]>(['my-events'])
 
-      const eventData = cachedEvents?.find(e => e.id === editingEventId)
-
-      if (!eventData) return null
-
-      let formattedDate = '';
-      if (eventData.date) {
-        const d = new Date(eventData.date);
-        const tzOffset = d.getTimezoneOffset() * 60000;
-        formattedDate = new Date(d.getTime() - tzOffset).toISOString().slice(0, 16);
-      }
-
-      reset({
-        title: eventData.title,
-        description: eventData.description,
-        category: eventData.category,
-        imageUrl: eventData.imageUrl,
-        date: formattedDate,
-        location: eventData.location,
-        capacity: eventData.capacity,
-        price: eventData.price,
-        externalId: '',
-      });
-
-      return eventData;
+      return cachedEvents?.find(e => e.id === editingEventId)
     },
     enabled: !!editingEventId,
     staleTime: Infinity,
   })
+
+  useEffect(() => {
+    if (!eventData) return
+
+    let formattedDate = '';
+    if (eventData.date) {
+      const d = new Date(eventData.date);
+      const tzOffset = d.getTimezoneOffset() * 60000;
+      formattedDate = new Date(d.getTime() - tzOffset).toISOString().slice(0, 16);
+    }
+
+    reset({
+      title: eventData.title,
+      description: eventData.description,
+      category: eventData.category,
+      imageUrl: eventData.imageUrl,
+      date: formattedDate,
+      location: eventData.location,
+      capacity: eventData.capacity,
+      price: eventData.price,
+      externalId: '',
+    });
+
+    async function fetchExternalId() {
+      try {
+        const movies = await searchTMDBMoviesAction(eventData!.title);
+        if (movies && movies.length > 0) {
+          const matchedMovie = movies[0];
+          setValue('externalId', String(matchedMovie.id));
+        }
+      } catch (err) {
+        console.error('Erro ao buscar externalId automaticamente no TMDb:', err);
+      }
+    }
+
+    fetchExternalId();  
+  }, [eventData, reset, setValue])
 
   return {
     handleSelectMovie,
