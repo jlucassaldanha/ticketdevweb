@@ -11,9 +11,10 @@ interface CreateEventFormCardProps {
   control: Control<EventFormData>
   isSubmitting: boolean
   onSubmit: (e: React.SubmitEvent) => void
+  isEdit: boolean
 }
 
-export function CreateEventFormCard({ control, isSubmitting, onSubmit }: CreateEventFormCardProps) {
+export function CreateEventFormCard({ control, isSubmitting, onSubmit, isEdit }: CreateEventFormCardProps) {
   return (
     <form onSubmit={onSubmit}>
       <Card>
@@ -192,7 +193,9 @@ export function CreateEventFormCard({ control, isSubmitting, onSubmit }: CreateE
 
         <CardFooter>
           <Button type='submit' disabled={isSubmitting}>
-            {isSubmitting ? 'Salvando evento...' : 'Publicar Evento'}
+            {isEdit ? 
+              (isSubmitting ? 'Editando evento...' : 'Editar evento') 
+              : (isSubmitting ? 'Salvando evento...' : 'Publicar Evento')}
           </Button>
         </CardFooter> 
       </Card>

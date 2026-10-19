@@ -6,7 +6,7 @@ import { Skeleton } from '../ui/skeleton';
 export function TMDBMovieCard({ movie, onSelectMovie }: { movie: TMDbMovie, onSelectMovie: (movie: TMDbMovie) => void }) {
   return (
     <Card 
-      className='flex flex-col md:flex-row items-center overflow-hidden max-w-xl w-full hover:cursor-pointer hover:bg-accent/75' 
+      className='flex flex-col md:flex-row items-center overflow-hidden w-full hover:cursor-pointer hover:bg-accent/75' 
       onClick={() => onSelectMovie(movie)}>
       <div className='relative w-40 h-40 shrink-0'>
         <Image

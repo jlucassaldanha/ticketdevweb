@@ -9,9 +9,12 @@ import { useCreateEvent } from '@/hooks/useCreateEvent';
 import useSearchTMDB from '@/hooks/useSearchTMDB';
 import { AlertCircleIcon, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
+import { redirect, useSearchParams } from 'next/navigation';
 
 export default function CreatePage() {
+  const searchParams = useSearchParams()
+  const editingEventId = searchParams.get('id')
+
   const auth = useAuth()
       
   if (!auth.token) {
@@ -39,8 +42,8 @@ export default function CreatePage() {
     isSubmittingEvent,
     error,
     isSuccess,
-    formState
-  } = useCreateEvent(clearSearch)
+    formState,
+  } = useCreateEvent(clearSearch, editingEventId)
 
   const externalIdError = formState.errors.externalId?.message
 
@@ -75,9 +78,9 @@ export default function CreatePage() {
             </div>
           )}
 
-          <div className='flex flex-col gap-5'>
+          <div className='flex flex-col gap-5 w-full'>
             {tmdbMovies.map((movie) => (
-              <div key={movie.id}>
+              <div key={movie.id} className='w-full'>
                 <TMDBMovieCard 
                   movie={movie} 
                   onSelectMovie={handleSelectMovie}
@@ -92,6 +95,7 @@ export default function CreatePage() {
             control={eventControl}
             onSubmit={handleEventSubmit(onEventSubmit)}
             isSubmitting={isSubmittingEvent}
+            isEdit={!!editingEventId}
           />
         </div>
       </div>

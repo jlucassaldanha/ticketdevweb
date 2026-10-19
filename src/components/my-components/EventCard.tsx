@@ -1,22 +1,45 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+"use client"
+
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { TicketEvent } from '@/types/event';
 import Image from 'next/image';
 import { Badge } from '../ui/badge';
 import Link from 'next/link';
-import { CalendarIcon, MapPinIcon } from 'lucide-react';
+import { CalendarIcon, EditIcon, Loader2Icon, MapPinIcon, TrashIcon } from 'lucide-react';
 import { Skeleton } from '../ui/skeleton';
 import EventDate from './EventDate';
 import EventLocation from './EventLocation';
+import { Button } from '../ui/button';
+import { Progress } from '../ui/progress';
+import { redirect } from 'next/navigation';
 
 interface EventCardProps { 
   event: TicketEvent, 
   gateBanner?: boolean, 
-  isOrganizerBanner?: boolean 
+  isOrganizerBanner?: boolean
+  onDelete?: () => void
+  isDeleting?: boolean 
 }
 
-export function EventCard({ event, gateBanner, isOrganizerBanner }: EventCardProps) {
+export function EventCard({ event, gateBanner, isOrganizerBanner, onDelete, isDeleting }: EventCardProps) {
+  const href = gateBanner 
+    ? `/gate/events/${event.id}` 
+    : `/events/${event.id}`;
+
+  const isDisabled = Boolean(isOrganizerBanner);
+
   return (
-    <Link href={gateBanner ? `/gate/events/${event.id}` : isOrganizerBanner ? `/organizer/events/${event.id}` : `/events/${event.id}`} >
+    <Link 
+      href={href} 
+      aria-disabled={isDisabled}
+      tabIndex={isDisabled ? -1 : undefined}
+      onClick={(e) => {
+        if (isDisabled) {
+          e.preventDefault()
+        }
+      }}
+      className={`block h-full transition-opacity ${isDisabled ? 'cursor-default' : 'hover:opacity-95'}`}
+    >
       <Card key={event.id} className='h-full flex flex-col justify-between'>
         <div className="absolute" />
         <Image
@@ -47,8 +70,9 @@ export function EventCard({ event, gateBanner, isOrganizerBanner }: EventCardPro
         </CardContent>
 
         {isOrganizerBanner && (
-          <CardContent>
+          <CardContent className='flex flex-col justify-center items-center gap-2'>
             <span className='font-bold'>Ingressos Vendidos: {event.ticketsSold} de {event.capacity}</span>
+            <Progress value={(event.ticketsSold * 100) / event.capacity} className="w-[60%]"/>
           </CardContent>
         )}
         
@@ -56,6 +80,17 @@ export function EventCard({ event, gateBanner, isOrganizerBanner }: EventCardPro
           <CardContent className='flex items-center justify-center'>
             <span className='font-bold text-lg'>R$ {event.price.toFixed(2).replace('.', ',')}</span>
           </CardContent>
+        )}
+
+        {isOrganizerBanner && (
+          <CardFooter className='flex gap-5 w-full justify-center'>
+            <Button disabled={event.ticketsSold > 0} onClick={() => redirect(`/organizer/create?id=${event.id}`)}>
+              <EditIcon />
+            </Button>
+            <Button variant="destructive" onClick={onDelete} disabled={isDeleting || event.ticketsSold > 0}>
+              {isDeleting ? <Loader2Icon className='animate-spin'/> : <TrashIcon /> }
+            </Button>
+          </CardFooter>
         )}
       </Card>
     </Link>

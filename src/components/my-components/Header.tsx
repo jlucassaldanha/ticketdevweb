@@ -18,7 +18,7 @@ export default function Header() {
   }
 
   return (
-    <div className="flex justify-between items-center mb-6 p-6">
+    <div className="flex justify-between items-center mb-6 p-10">
       <Link href={'/'}>
         <span className='font-extrabold'>TicketDev</span>
       </Link>

@@ -60,8 +60,16 @@ export async function updateEventAction(eventId: string, data: EventFormData) {
     price: data.price
   }
 
+  console.log(payload)
+
   return await apiFetch(`/api/events/${eventId}`, {
     method: 'PUT',
     body: JSON.stringify(payload)
+  })
+}
+
+export async function deleteEventAction(eventId: string) {
+  return await apiFetch(`/api/events/${eventId}`, {
+    method: 'DELETE'
   })
 }
