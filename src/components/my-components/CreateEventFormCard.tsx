@@ -12,6 +12,7 @@ interface CreateEventFormCardProps {
   isSubmitting: boolean
   onSubmit: (e: React.SubmitEvent) => void
 }
+
 export function CreateEventFormCard({ control, isSubmitting, onSubmit }: CreateEventFormCardProps) {
   return (
     <form onSubmit={onSubmit}>
@@ -41,7 +42,7 @@ export function CreateEventFormCard({ control, isSubmitting, onSubmit }: CreateE
           />
         </CardContent>
 
-        <CardContent className='flex gap-5'>    
+        <CardContent className='flex flex-col md:flex-row gap-5'>    
           <Controller 
             name="category"
             control={control}
@@ -102,7 +103,7 @@ export function CreateEventFormCard({ control, isSubmitting, onSubmit }: CreateE
           />
         </CardContent>
 
-        <CardContent className='flex gap-5'>    
+        <CardContent className='flex flex-col md:flex-row gap-5'>    
           <Controller 
             name="price"
             control={control}

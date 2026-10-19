@@ -61,7 +61,7 @@ export default function CreatePage() {
         Crie seus eventos por aqui
       </div>
 
-      <div className='w-full flex gap-10'>
+      <div className='w-full flex flex-col md:flex-row gap-5 md:gap-10'>
         <div className='w-full flex flex-col gap-5'>
           <div className='w-full'>
             <SearchTMDBCard control={control} onSubmit={handleSubmit(onSubmit)}/>
