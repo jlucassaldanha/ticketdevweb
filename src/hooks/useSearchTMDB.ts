@@ -7,10 +7,10 @@ import { useForm } from 'react-hook-form'
 import z from 'zod'
 
 const formSchema = z.object({
-  searchtmdb: z.string(),
+  searchtmdb: z.string().min(1, "O campo de pesquisa não deve estar vazio."),
 })
 
-type SearchFormData = z.infer<typeof formSchema>
+export type SearchFormData = z.infer<typeof formSchema>
 
 export default function useSearchTMDB() {
   const [submittedSearch, setSubmittedSearch] = useState('');

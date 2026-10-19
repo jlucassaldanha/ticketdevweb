@@ -82,7 +82,7 @@ export function EventCardSkeleton() {
       <CardContent className='flex flex-col gap-1'>
         <div className='flex items-center gap-2'>
           <CalendarIcon className="h-4 w-4" />
-          <Skeleton className="h-4 w-1/3" />
+          <Skeleton className="h-4 w-2/3" />
         </div>
 
         <div className='flex items-center gap-2'>

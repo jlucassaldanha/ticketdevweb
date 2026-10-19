@@ -33,13 +33,13 @@ export default function OrganizerPage() {
       </div>
 
       <div className='w-full'>
-        Crie e organize seus eventos por aqui
+        Organize seus eventos por aqui
       </div>
 
       <div className='flex flex-col gap-6 w-full'>
         <div className='w-full flex justify-end'>
           <Link 
-            className='flex gap-1 bg-primary p-2 text-primary-foreground rounded-3xl' 
+            className='flex gap-1 bg-primary py-2 px-3 text-primary-foreground rounded-3xl' 
             href="/organizer/create"
           >
             Criar Evento

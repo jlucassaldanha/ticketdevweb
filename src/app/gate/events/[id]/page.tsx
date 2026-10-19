@@ -63,7 +63,7 @@ export default function GateEventPage() {
         <div className="w-full">
           <div className="text-3xl font-bold w-full pb-5">{event?.title}</div>
 
-          <div className='w-full'><EventDate date={new Date(event?.date || new Date()).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })} /></div>
+          <div className='w-full'><EventDate date={new Date(event.date).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })} /></div>
 
           <div className='w-full'><EventLocation location={event?.location || "Local"} /></div>
         </div>

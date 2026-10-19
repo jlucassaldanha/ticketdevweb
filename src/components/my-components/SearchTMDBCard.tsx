@@ -5,13 +5,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Control, Controller } from 'react-hook-form';
 import { Button } from '../ui/button';
+import { SearchFormData } from '@/hooks/useSearchTMDB';
 
 interface SearchCardProps {
-  control: Control<{
-      searchtmdb: string;
-  }, any, {
-      searchtmdb: string;
-  }>;
+  control: Control<SearchFormData>;
   onSubmit: (e: React.SubmitEvent) => void;
 }
 
