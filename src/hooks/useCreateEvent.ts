@@ -14,7 +14,7 @@ const eventFormSchema = z.object({
   location: z.string().min(1, 'O local é obrigatório'),
   capacity: z.number().min(1, 'O valor mínimo deve ser 1'),
   price: z.number().min(0, 'O valor não pode ser negativo'),
-  externalId: z.string().min(1, 'Selecione um filme'),
+  externalId: z.string().min(1, 'É obrigatório selecionar um filme do catálogo de TMDb'),
 })
 
 export type EventFormData = z.infer<typeof eventFormSchema>
@@ -22,7 +22,7 @@ export type EventFormData = z.infer<typeof eventFormSchema>
 export function useCreateEvent(onClearSearch: () => void, editingEventId?: string | null) {
   const queryClient = useQueryClient()
 
-  const { control: eventControl, handleSubmit: handleEventSubmit, setValue, reset, setError, clearErrors, formState } = useForm<EventFormData>({
+  const { control: eventControl, handleSubmit: handleEventSubmit, setValue, reset, formState } = useForm<EventFormData>({
     resolver: zodResolver(eventFormSchema),
     defaultValues: {
       title: '',
@@ -67,15 +67,6 @@ export function useCreateEvent(onClearSearch: () => void, editingEventId?: strin
   })
 
   const onEventSubmit = async (data: EventFormData) => {
-    if (!data.externalId) {
-      setError('root.serverError', { 
-        type: 'manual', 
-        message: 'Por favor, busque e selecione um filme do catálogo TMDb à esquerda antes de publicar!' 
-      });
-      return;
-    }
-
-    clearErrors('root.serverError');
     await saveEvent(data)
   };
 

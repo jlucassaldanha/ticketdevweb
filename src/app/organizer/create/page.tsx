@@ -42,7 +42,7 @@ export default function CreatePage() {
     formState
   } = useCreateEvent(clearSearch)
 
-  const validationError = formState.errors.root?.serverError?.message
+  const externalIdError = formState.errors.externalId?.message
 
   return (
     <div className='flex flex-col gap-5 justify-center items-center p-10'>
@@ -60,39 +60,6 @@ export default function CreatePage() {
       <div className='w-full'>
         Crie seus eventos por aqui
       </div>
-
-      {error && (
-        <div>
-          <AlertCard 
-            color='red'
-            title='Erro'
-            description={error.message}
-            icon={<AlertCircleIcon />}
-          />
-        </div>
-      )}
-
-      {validationError && (
-        <div>
-          <AlertCard 
-            color='red'
-            title='Erro'
-            description={validationError}
-            icon={<AlertCircleIcon />}
-          />
-        </div>
-      )}
-
-      {isSuccess && (
-        <div>
-          <AlertCard 
-            color='green'
-            title='Sucesso'
-            description="Evento criado com sucesso!"
-            icon={<AlertCircleIcon />}
-          />
-        </div>
-      )}
 
       <div className='w-full flex gap-10'>
         <div className='w-full flex flex-col gap-5'>
@@ -128,6 +95,39 @@ export default function CreatePage() {
           />
         </div>
       </div>
+
+      {error && (
+        <div>
+          <AlertCard 
+            color='red'
+            title='Erro'
+            description={error.message}
+            icon={<AlertCircleIcon />}
+          />
+        </div>
+      )}
+
+      {externalIdError && (
+        <div>
+          <AlertCard 
+            color='red'
+            title='Erro'
+            description={externalIdError}
+            icon={<AlertCircleIcon />}
+          />
+        </div>
+      )}
+
+      {isSuccess && (
+        <div>
+          <AlertCard 
+            color='green'
+            title='Sucesso'
+            description="Evento criado com sucesso!"
+            icon={<AlertCircleIcon />}
+          />
+        </div>
+      )}
     </div>
   )
 }
