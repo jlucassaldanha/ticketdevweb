@@ -75,9 +75,9 @@ export default function CreatePage() {
             </div>
           )}
 
-          <div className='flex flex-col gap-5'>
+          <div className='flex flex-col gap-5 w-full'>
             {tmdbMovies.map((movie) => (
-              <div key={movie.id}>
+              <div key={movie.id} className='w-full'>
                 <TMDBMovieCard 
                   movie={movie} 
                   onSelectMovie={handleSelectMovie}
