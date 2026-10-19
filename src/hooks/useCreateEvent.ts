@@ -1,7 +1,8 @@
 import { createEventAction, updateEventAction } from '@/actions/events'
+import { TicketEvent } from '@/types/event'
 import { TMDbMovie } from '@/types/tmdb'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import z from 'zod'
 
@@ -20,7 +21,7 @@ const eventFormSchema = z.object({
 export type EventFormData = z.infer<typeof eventFormSchema>
 
 export function useCreateEvent(onClearSearch: () => void, editingEventId?: string | null) {
-  const queryClient = useQueryClient()
+ const queryClient = useQueryClient()
 
   const { control: eventControl, handleSubmit: handleEventSubmit, setValue, reset, formState } = useForm<EventFormData>({
     resolver: zodResolver(eventFormSchema),
@@ -70,6 +71,42 @@ export function useCreateEvent(onClearSearch: () => void, editingEventId?: strin
     await saveEvent(data)
   };
 
+  useQuery({
+    queryKey: ['event-edit', editingEventId],
+    queryFn: () => {
+      if (!editingEventId) return null
+
+      const cachedEvents = queryClient.getQueryData<TicketEvent[]>(['my-events'])
+
+      const eventData = cachedEvents?.find(e => e.id === editingEventId)
+
+      if (!eventData) return null
+
+      let formattedDate = '';
+      if (eventData.date) {
+        const d = new Date(eventData.date);
+        const tzOffset = d.getTimezoneOffset() * 60000;
+        formattedDate = new Date(d.getTime() - tzOffset).toISOString().slice(0, 16);
+      }
+
+      reset({
+        title: eventData.title,
+        description: eventData.description,
+        category: eventData.category,
+        imageUrl: eventData.imageUrl,
+        date: formattedDate,
+        location: eventData.location,
+        capacity: eventData.capacity,
+        price: eventData.price,
+        externalId: '',
+      });
+
+      return eventData;
+    },
+    enabled: !!editingEventId,
+    staleTime: Infinity,
+  })
+
   return {
     handleSelectMovie,
     eventControl,
@@ -79,6 +116,6 @@ export function useCreateEvent(onClearSearch: () => void, editingEventId?: strin
     isError,
     error,
     isSuccess,
-    formState
+    formState,
   }
 }

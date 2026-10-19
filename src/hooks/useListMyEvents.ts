@@ -1,7 +1,7 @@
-import { listMyEventsAction } from '@/actions/events'
+import { deleteEventAction, listMyEventsAction } from '@/actions/events'
 import { TicketEvent } from '@/types/event'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import z from 'zod'
 
@@ -43,6 +43,16 @@ export default function useListMyEvents() {
     return matchesSearch && matchesCategory;
   });
 
+  const queryClient = useQueryClient()
+
+  const { mutateAsync: deleteEvent, isPending: isDeleting } = useMutation({
+    mutationFn: async (eventId: string) => {
+      return await deleteEventAction(eventId) 
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['my-events'] })
+    }
+  })
 
   return {
     isPending,
@@ -52,5 +62,7 @@ export default function useListMyEvents() {
     categoryOptions,
     control,
     handleSubmit,
+    deleteEvent,
+    isDeleting
   }
 }

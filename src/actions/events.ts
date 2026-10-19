@@ -65,3 +65,9 @@ export async function updateEventAction(eventId: string, data: EventFormData) {
     body: JSON.stringify(payload)
   })
 }
+
+export async function deleteEventAction(eventId: string) {
+  return await apiFetch(`/api/events/${eventId}`, {
+    method: 'DELETE'
+  })
+}

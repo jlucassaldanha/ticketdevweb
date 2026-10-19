@@ -23,7 +23,9 @@ export default function OrganizerPage() {
     isPending,
     filteredEvents,
     categoryOptions,
-    control
+    control,
+    deleteEvent,
+    isDeleting
   } = useListMyEvents()
 
   return (
@@ -72,7 +74,13 @@ export default function OrganizerPage() {
           
           <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5'>
             {filteredEvents.map(event => (
-              <EventCard key={event.id} event={event} isOrganizerBanner />
+              <EventCard 
+                key={event.id} 
+                event={event} 
+                isOrganizerBanner 
+                onDelete={() => deleteEvent(event.id)} 
+                isDeleting={isDeleting} 
+              />
             ))}
           </div>
         </div>

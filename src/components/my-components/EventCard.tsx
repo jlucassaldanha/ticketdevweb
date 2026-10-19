@@ -1,22 +1,27 @@
+"use client"
+
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { TicketEvent } from '@/types/event';
 import Image from 'next/image';
 import { Badge } from '../ui/badge';
 import Link from 'next/link';
-import { CalendarIcon, EditIcon, MapPinIcon, TrashIcon } from 'lucide-react';
+import { CalendarIcon, EditIcon, Loader2Icon, MapPinIcon, TrashIcon } from 'lucide-react';
 import { Skeleton } from '../ui/skeleton';
 import EventDate from './EventDate';
 import EventLocation from './EventLocation';
 import { Button } from '../ui/button';
 import { Progress } from '../ui/progress';
+import { redirect } from 'next/navigation';
 
 interface EventCardProps { 
   event: TicketEvent, 
   gateBanner?: boolean, 
-  isOrganizerBanner?: boolean 
+  isOrganizerBanner?: boolean
+  onDelete?: () => void
+  isDeleting?: boolean 
 }
 
-export function EventCard({ event, gateBanner, isOrganizerBanner }: EventCardProps) {
+export function EventCard({ event, gateBanner, isOrganizerBanner, onDelete, isDeleting }: EventCardProps) {
   const href = gateBanner 
     ? `/gate/events/${event.id}` 
     : `/events/${event.id}`;
@@ -79,11 +84,11 @@ export function EventCard({ event, gateBanner, isOrganizerBanner }: EventCardPro
 
         {isOrganizerBanner && (
           <CardFooter className='flex gap-5 w-full justify-center'>
-            <Button>
+            <Button disabled={event.ticketsSold > 0} onClick={() => redirect(`/organizer/create?id=${event.id}`)}>
               <EditIcon />
             </Button>
-            <Button variant="destructive">
-              <TrashIcon />
+            <Button variant="destructive" onClick={onDelete} disabled={isDeleting || event.ticketsSold > 0}>
+              {isDeleting ? <Loader2Icon className='animate-spin'/> : <TrashIcon /> }
             </Button>
           </CardFooter>
         )}
