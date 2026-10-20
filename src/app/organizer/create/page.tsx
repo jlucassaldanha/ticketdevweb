@@ -127,7 +127,7 @@ export default function CreatePage() {
           <AlertCard 
             color='green'
             title='Sucesso'
-            description="Evento criado com sucesso!"
+            description={editingEventId ? "Evento editado com sucesso!" : "Evento criado com sucesso!"}
             icon={<AlertCircleIcon />}
           />
         </div>

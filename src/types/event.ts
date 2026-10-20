@@ -5,6 +5,7 @@ export interface TicketEvent {
   title: string
   description: string
   imageUrl: string
+  externalId: string  
   ticketsSold: number
   category: string
   date: string
