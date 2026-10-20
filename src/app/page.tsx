@@ -32,6 +32,11 @@ export default function Home() {
 
         <div className='flex flex-col gap-5'>
           <span className='font-bold text-lg'>Eventos</span>
+
+          {isPending && (
+            <span className='text-gray-500'>Acordando o servidor, devido ao plano gratuito isso pode levar até um minuto...</span>
+          )}
+
           {isPending && (
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5'>
               <EventCardSkeleton />
