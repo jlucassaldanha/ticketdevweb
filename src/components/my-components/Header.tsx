@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Button } from '../ui/button';
 import { logoutAction } from '@/actions/auth';
 import { usePathname } from 'next/navigation';
+import { LogoTicketDev } from './LogoTicketDev';
 
 export default function Header() {
   const pathName = usePathname()
@@ -20,7 +21,9 @@ export default function Header() {
   return (
     <div className="flex justify-between items-center mb-6 p-10">
       <Link href={'/'}>
-        <span className='font-extrabold'>TicketDev</span>
+        <div className='text-3xl'>
+          <LogoTicketDev />
+        </div>
       </Link>
 
       <div>
