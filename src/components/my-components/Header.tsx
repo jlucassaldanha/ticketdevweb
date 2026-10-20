@@ -21,14 +21,14 @@ export default function Header() {
   return (
     <div className="flex justify-between items-center mb-6 p-10">
       <Link href={'/'}>
-        <div className='text-3xl'>
+        <div className='md:text-3xl'>
           <LogoTicketDev />
         </div>
       </Link>
 
       <div>
         {auth.user ? (
-          <>
+          <div className='flex justify-center items-center'>
             <Link href={accountLink}>
               <span className='font-bold'>Olá, {auth.user?.name}</span>
             </Link>
@@ -36,7 +36,7 @@ export default function Header() {
             <Button onClick={logoutAction} className='ml-4'>
               Sair
             </Button>
-          </>
+          </div>
         ) : (
           <>
             <Link href={'/login'}>

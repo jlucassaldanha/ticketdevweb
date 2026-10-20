@@ -12,17 +12,17 @@ interface SeatSelectionCardProps {
 
 export function SeatSelectionCard({ rows, seatsPerRow, occupiedSeats, selectedSeat, handleSeatClick }: SeatSelectionCardProps) {
   return (
-    <Card className=" p-5">
+    <Card className="p-3 md:p-5 w-full overflow-hidden">
         <CardContent>
           <div className='flex flex-col items-center justify-center w-full'>
-            <div className="w-full h-1 bg-linear-to-r bg-primary rounded-full z-10" />
-            <span className="mt-6 text-sm font-bold tracking-[0.3em] text-muted-foreground uppercase">
+            <span className="mb-6 text-sm font-bold tracking-[0.3em] text-muted-foreground uppercase">
               Tela/Palco
             </span>
+            <div className="w-full h-1 bg-linear-to-r bg-primary rounded-full z-10" />
           </div>
         </CardContent>
 
-        <ScrollArea className="w-full whitespace-nowrap rounded-md pb-4 custom-scrollbar">
+        <ScrollArea className="w-full whitespace-nowrap rounded-md pb-4">
           <div className="flex flex-col items-center min-w-max mx-auto px-4 py-2">
             {rows.map((row) => (
               <div key={row} className="flex justify-center items-center gap-0.5 mb-0.5">
@@ -52,7 +52,7 @@ export function SeatSelectionCard({ rows, seatsPerRow, occupiedSeats, selectedSe
             ))}
           </div>
 
-          <ScrollBar orientation="horizontal" className="h-2" />
+          <ScrollBar orientation="horizontal" className="h-2.5 bg-card/50" />
         </ScrollArea>
       </Card>
   )
