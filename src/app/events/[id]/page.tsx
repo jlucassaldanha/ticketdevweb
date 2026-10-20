@@ -30,7 +30,7 @@ export default function EventPage() {
   console.log(event?.imageUrl)
 
   return (
-    <div className="flex flex-col gap-10 justify-center items-center p-10">
+    <div className="flex flex-col gap-6 md:gap-10 justify-center items-center p-4 md:p-10">
       <div className="w-full">
         <Link href="/" className="flex gap-2">
           <ArrowLeft />
@@ -42,7 +42,7 @@ export default function EventPage() {
         Escolha seu Lugar
       </div>
 
-      <div className="flex flex-col md:flex-row gap-5">
+      <div className="flex flex-col md:flex-row gap-5 w-full">
         <div className="flex flex-col gap-5 w-full md:w-2/3">
           <SeatSelectionCard
             rows={rows}
@@ -64,7 +64,7 @@ export default function EventPage() {
               />
             </div>
           )}
-
+          
           {!event || isLoading ? (
             <OrderCardSkeleton />
           ) : (
