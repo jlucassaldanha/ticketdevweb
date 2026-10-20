@@ -39,6 +39,7 @@ export default function ShareTicketPage() {
             seat={ticket.seatNumber || "Lugar"}
             status={ticket.status === "ACTIVE" ? "Ativo" : ticket.status === "USED" ? "Utilizado" : "Cancelado"}
             qrUrl={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&color=000000&bgcolor=ffffff&data=${ticket.secureHash}`}
+            imageUrl={ticket.event.imageUrl}
             isShared
           />
         )}    

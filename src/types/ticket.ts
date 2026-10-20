@@ -28,6 +28,7 @@ export interface SharedTicket {
     location: string
     title: string
     date: Date
+    imageUrl: string
   };
 }
 

@@ -5,7 +5,7 @@ import {
   OrderCard,
   OrderCardSkeleton,
 } from "@/components/my-components/OrderCard";
-import { SeatSelectionCard } from "@/components/my-components/SeatSelectionCard";
+import { SeatSelectionCard, SeatSelectionCardSkeleton } from "@/components/my-components/SeatSelectionCard";
 import { Button } from "@/components/ui/button";
 import useEventDetails from "@/hooks/useEventDetails";
 import useSeatSelection from "@/hooks/useSeatSelection";
@@ -43,15 +43,20 @@ export default function EventPage() {
       </div>
 
       <div className="flex flex-col md:flex-row gap-5 w-full">
-        <div className="flex flex-col gap-5 w-full md:w-2/3">
-          <SeatSelectionCard
-            rows={rows}
-            seatsPerRow={seatsPerRow}
-            occupiedSeats={occupiedSeats}
-            selectedSeat={selectedSeat}
-            handleSeatClick={handleSeatClick}
-          />
-        </div>
+        {!event || isLoading ? (
+          <SeatSelectionCardSkeleton />
+        ) : (
+          <div className="flex flex-col gap-5 w-full md:w-2/3">
+            <SeatSelectionCard
+              rows={rows}
+              seatsPerRow={seatsPerRow}
+              occupiedSeats={occupiedSeats}
+              selectedSeat={selectedSeat}
+              handleSeatClick={handleSeatClick}
+            />
+          </div>
+        )}
+        
 
         <div className="flex flex-col gap-5 w-full md:w-1/3 items-center justify-center">
           {error && (
