@@ -57,6 +57,7 @@ export async function updateEventAction(eventId: string, data: EventFormData) {
 
   const payload = {
     ...data,
+    date: new Date(data.date).toISOString(),
     price: data.price
   }
 

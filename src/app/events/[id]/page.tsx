@@ -27,8 +27,10 @@ export default function EventPage() {
     handleProceedToCheckout,
   } = useSeatSelection(event);
 
+  console.log(event?.imageUrl)
+
   return (
-    <div className="flex flex-col gap-10 justify-center items-center p-5">
+    <div className="flex flex-col gap-10 justify-center items-center p-10">
       <div className="w-full">
         <Link href="/" className="flex gap-2">
           <ArrowLeft />
@@ -36,7 +38,9 @@ export default function EventPage() {
         </Link>
       </div>
 
-      <div className="text-3xl font-bold w-full">{event?.title}</div>
+      <div className="text-3xl font-bold w-full">
+        Escolha seu Lugar
+      </div>
 
       <div className="flex flex-col md:flex-row gap-5">
         <div className="flex flex-col gap-5 w-full md:w-2/3">

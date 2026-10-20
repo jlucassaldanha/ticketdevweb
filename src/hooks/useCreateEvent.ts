@@ -1,5 +1,4 @@
 import { createEventAction, updateEventAction } from '@/actions/events'
-import { searchTMDBMoviesAction } from '@/actions/tmdb'
 import { TicketEvent } from '@/types/event'
 import { TMDbMovie } from '@/types/tmdb'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -96,6 +95,8 @@ export function useCreateEvent(onClearSearch: () => void, editingEventId?: strin
       formattedDate = new Date(d.getTime() - tzOffset).toISOString().slice(0, 16);
     }
 
+    console.log(formattedDate)
+
     reset({
       title: eventData.title,
       description: eventData.description,
@@ -105,23 +106,10 @@ export function useCreateEvent(onClearSearch: () => void, editingEventId?: strin
       location: eventData.location,
       capacity: eventData.capacity,
       price: eventData.price,
-      externalId: '',
+      externalId: eventData.externalId,
     });
 
-    async function fetchExternalId() {
-      try {
-        const movies = await searchTMDBMoviesAction(eventData!.title);
-        if (movies && movies.length > 0) {
-          const matchedMovie = movies[0];
-          setValue('externalId', String(matchedMovie.id));
-        }
-      } catch (err) {
-        console.error('Erro ao buscar externalId automaticamente no TMDb:', err);
-      }
-    }
-
-    fetchExternalId();  
-  }, [eventData, reset, setValue])
+  }, [eventData, reset])
 
   return {
     handleSelectMovie,
