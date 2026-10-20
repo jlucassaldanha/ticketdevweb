@@ -1,5 +1,6 @@
 "use client"
 
+import { LogoTicketDev } from '@/components/my-components/LogoTicketDev';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Field, FieldError } from '@/components/ui/field';
@@ -31,7 +32,7 @@ export default function RegisterPage() {
   return (
     <div className='flex flex-col justify-center items-center h-screen gap-5'>
       <div>
-        <span className='font-extrabold'>TicketDev</span>
+        <LogoTicketDev />
       </div>
 
       <Card className='flex flex-col items-center justify-center'>
@@ -137,7 +138,7 @@ export default function RegisterPage() {
           <Button className='w-full' type='submit' form='register-form' disabled={isPending} >{!isPending ? 'Registrar' : 'Registrando..'}</Button>
           <div>
             Já possui uma conta?
-            <Link className="text-blue-600 font-bold" href={'login'}>{' '}Entrar</Link>
+            <Link className="text-cyan font-bold" href={'login'}>{' '}Entrar</Link>
           </div>
         </CardFooter>
       </Card>

@@ -3,16 +3,22 @@
 import useListEvents from '@/hooks/useListEvents';
 import SearchCard from '@/components/my-components/SearchCard';
 import { EventCard, EventCardSkeleton } from '@/components/my-components/EventCard';
+import { LogoTicketDev } from '@/components/my-components/LogoTicketDev';
 
 export default function Home() {
   const { isPending, filteredEvents, categoryOptions, control} = useListEvents()
 
   return (
-    <div className='py-6 px-6'>
+    <div className='p-10'>
+
+      <div className='text-7xl flex justify-center items-center'>
+        <LogoTicketDev />
+      </div>
+
       <div className='flex flex-col justify-center items-center gap-5 text-center py-20'>
         <h1 className='text-5xl font-bold'>
           Garanta seus ingressos <br />
-          <span>
+          <span className='text-cyan'>
             com segurança.
           </span>
         </h1>

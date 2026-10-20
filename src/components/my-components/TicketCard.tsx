@@ -36,7 +36,7 @@ export function TicketCard({
     <Card className='flex flex-col h-full w-full justify-between'>
       <CardHeader>
         <CardAction>
-          <Badge variant={status === 'Ativo' ? 'default' : status === 'Cancelado' ? 'destructive' : 'outline'}>{status}</Badge>
+          <Badge variant={status === 'Ativo' ? 'default' : status === 'Cancelado' ? 'destructive' : 'secondary'}>{status}</Badge>
         </CardAction>
         <CardTitle className='font-extrabold text-2xl'>{title}</CardTitle>
       </CardHeader>
@@ -52,12 +52,12 @@ export function TicketCard({
 
       <CardContent className='w-full flex items-center justify-center'>
         {status === 'Cancelado' ? (
-          <div className='text-red-500 flex flex-col items-center'>
+          <div className='text-destructive flex flex-col items-center'>
             <TicketX size={150} />
             <span className='font-bold text-2xl'>INGRESSO CANCELADO</span>
           </div>
         ) : status === 'Utilizado' ? (
-          <div className='flex flex-col items-center'>
+          <div className='flex flex-col items-center text-secondary'>
             <TicketMinus size={150} />
             <span className='font-bold text-2xl'>INGRESSO UTILIZADO</span>
           </div>

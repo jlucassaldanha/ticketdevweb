@@ -52,7 +52,7 @@ export function EventCard({ event, gateBanner, isOrganizerBanner, onDelete, isDe
 
         <CardHeader className='flex flex-col gap-2'>    
           <CardTitle className="text-xl font-bold leading-tight">{event.title}</CardTitle>
-          <Badge variant="secondary" className="shrink-0">{event.category}</Badge>
+          <Badge variant="default" className="shrink-0">{event.category}</Badge>
         </CardHeader>
 
         <CardContent>
@@ -77,7 +77,7 @@ export function EventCard({ event, gateBanner, isOrganizerBanner, onDelete, isDe
         )}
         
         {!gateBanner && (
-          <CardContent className='flex items-center justify-center'>
+          <CardContent className='flex items-center justify-center text-primary'>
             <span className='font-bold text-lg'>R$ {event.price.toFixed(2).replace('.', ',')}</span>
           </CardContent>
         )}
