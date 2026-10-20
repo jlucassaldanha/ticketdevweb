@@ -29,6 +29,8 @@ export default function TicketsPage() {
     handleShareTicket
    } = useTickets()
 
+   console.log(tickets)
+
   return (
     <div className='flex flex-col gap-5 justify-center items-center p-5'>
       <div className="w-full">
@@ -44,7 +46,7 @@ export default function TicketsPage() {
 
       <div className='w-full'>
         {isPending && (
-          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5'>
+          <div className='grid grid-cols-1 lg:grid-cols-2 gap-5'>
             <TicketCardSkeleton />
             <TicketCardSkeleton />
             <TicketCardSkeleton />
@@ -64,7 +66,7 @@ export default function TicketsPage() {
         </div>
       )}
 
-      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full'>
+      <div className='grid grid-cols-1 gap-5 w-full items-center justify-center'>
         {tickets.map((ticket) => (
           <div key={ticket.id} className='flex flex-col h-full'>
             <TicketCard
@@ -74,6 +76,7 @@ export default function TicketsPage() {
               seat={ticket.seatNumber || "N/A"}
               status={ticket.status === "ACTIVE" ? "Ativo" : ticket.status === "USED" ? "Utilizado" : "Cancelado"}
               qrUrl={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&color=000000&bgcolor=ffffff&data=${ticket.secureHash}`}
+              imageUrl={ticket.event.imageUrl}
               onShare={() => handleShareTicket(ticket.secureHash)}
               onCancel={() => cancelTicket(ticket.id)}
               isLoadingCancel={isLoadingCancel}

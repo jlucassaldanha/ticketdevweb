@@ -1,6 +1,7 @@
 import { Button } from '../ui/button';
 import { Card, CardContent } from '../ui/card';
 import { ScrollArea, ScrollBar } from '../ui/scroll-area';
+import { Skeleton } from '../ui/skeleton';
 
 interface SeatSelectionCardProps {
   rows: string[];
@@ -54,6 +55,24 @@ export function SeatSelectionCard({ rows, seatsPerRow, occupiedSeats, selectedSe
 
           <ScrollBar orientation="horizontal" className="h-2.5 bg-card/50" />
         </ScrollArea>
+      </Card>
+  )
+}
+
+export function SeatSelectionCardSkeleton() {
+  return (
+    <Card className="p-3 md:p-5 w-full overflow-hidden">
+        <CardContent>
+          <div className='flex flex-col items-center justify-center w-full'>
+            <Skeleton className='w-30 h-4 mb-4'/>
+            <Skeleton className='w-full h-2'/>
+          </div>
+        </CardContent>
+
+        <div className='w-full flex justify-center items-center'>
+          <Skeleton className='h-100 w-100'/>
+        </div>
+        
       </Card>
   )
 }
