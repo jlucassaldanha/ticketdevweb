@@ -18,7 +18,7 @@ export default function Home() {
       <div className='flex flex-col justify-center items-center gap-5 text-center py-20'>
         <h1 className='text-5xl font-bold'>
           Garanta seus ingressos <br />
-          <span>
+          <span className='text-cyan'>
             com segurança.
           </span>
         </h1>

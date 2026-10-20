@@ -138,7 +138,7 @@ export default function RegisterPage() {
           <Button className='w-full' type='submit' form='register-form' disabled={isPending} >{!isPending ? 'Registrar' : 'Registrando..'}</Button>
           <div>
             Já possui uma conta?
-            <Link className="text-blue-600 font-bold" href={'login'}>{' '}Entrar</Link>
+            <Link className="text-cyan font-bold" href={'login'}>{' '}Entrar</Link>
           </div>
         </CardFooter>
       </Card>

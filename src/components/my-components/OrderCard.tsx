@@ -14,7 +14,7 @@ interface OrderCardProps {
 export function OrderCard({ title, date, location, seat, price }: OrderCardProps) {
   return (
     <Card className='w-full'>
-      <CardHeader>
+      <CardHeader className='text-secondary font-extrabold'>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
 
@@ -30,7 +30,7 @@ export function OrderCard({ title, date, location, seat, price }: OrderCardProps
         </div>
       </CardContent>
 
-      <CardContent className='flex items-center justify-between'>
+      <CardContent className='flex items-center justify-between text-secondary'>
         <span>Valor:</span>
         <span className='font-bold text-lg'>R$ {price}</span>
       </CardContent>
