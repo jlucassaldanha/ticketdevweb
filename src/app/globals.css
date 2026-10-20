@@ -77,8 +77,8 @@
 
   --destructive: oklch(0.60 0.22 25);
   
-  --border: var(--olive-green); 
-  --input: var(--olive-green);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.88 0.22 130);
 
   --radius: 0.75rem;
@@ -120,8 +120,8 @@
 
   --destructive: oklch(0.60 0.22 25);
   
-  --border: var(--olive-green); 
-  --input: var(--olive-green);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
 
   --ring: oklch(0.88 0.22 130);
 
