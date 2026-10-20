@@ -139,9 +139,45 @@
   * {
     @apply border-border outline-ring/50;
   }
+  
   body {
-    @apply bg-background text-foreground;
+    background-color: var(--background);
+
+    background-image: 
+      radial-gradient(
+        circle at 80% 20%, 
+        oklch(87.913% 0.21969 129.923 / 0.082) 0%,  
+        transparent 60%                   
+      );
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    
+    background-position: center top;
+    background-size: 100% 100vh;
+
+    position: relative;
+    z-index: 0;
+    
+    @apply text-foreground;
   }
+
+  body::before {
+    content: "";
+  
+    position: absolute;
+    inset: 0; 
+    z-index: -1; 
+
+    background-image: 
+      linear-gradient(to right, oklch(100% 0.00011 271.152 / 0.041) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(100% 0.00011 271.152 / 0.041) 1px, transparent 1px);
+    
+    background-size: 60px 60px; 
+    background-repeat: repeat;
+    
+    opacity: 0.6; 
+  }
+  
   html {
     @apply font-sans;
   }
