@@ -146,7 +146,7 @@
     background-image: 
       radial-gradient(
         circle at 80% 20%, 
-        oklch(87.913% 0.21969 129.923 / 0.068) 0%,  
+        oklch(87.913% 0.21969 129.923 / 0.123) 0%,  
         transparent 60%                   
       );
     background-attachment: fixed;
@@ -169,8 +169,8 @@
     z-index: -1; 
 
     background-image: 
-      linear-gradient(to right, oklch(100% 0.00011 271.152 / 0.027) 1px, transparent 1px),
-      linear-gradient(to bottom, oklch(100% 0.00011 271.152 / 0.027) 1px, transparent 1px);
+      linear-gradient(to right, oklch(100% 0.00011 271.152 / 0.068) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(100% 0.00011 271.152 / 0.068) 1px, transparent 1px);
     
     background-size: 32px 32px; 
     background-repeat: repeat;
