@@ -27,9 +27,7 @@ export default function TicketsPage() {
     errorCancel,
     cancelTicket,
     handleShareTicket
-   } = useTickets()
-
-   console.log(tickets)
+  } = useTickets()
 
   return (
     <div className='flex flex-col gap-5 justify-center items-center p-5'>
@@ -46,7 +44,7 @@ export default function TicketsPage() {
 
       <div className='w-full'>
         {isPending && (
-          <div className='grid grid-cols-1 lg:grid-cols-2 gap-5'>
+          <div className='flex flex-col gap-5 items-center justify-center w-full'>
             <TicketCardSkeleton />
             <TicketCardSkeleton />
             <TicketCardSkeleton />
@@ -68,7 +66,7 @@ export default function TicketsPage() {
 
       <div className='grid grid-cols-1 gap-5 w-full items-center justify-center'>
         {tickets.map((ticket) => (
-          <div key={ticket.id} className='flex flex-col h-full'>
+          <div key={ticket.id} className='flex flex-col h-full w-full items-center justify-center'>
             <TicketCard
               title={ticket.event.title}
               date={new Date(ticket.event.date).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
