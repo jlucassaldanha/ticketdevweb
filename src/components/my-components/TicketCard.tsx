@@ -35,14 +35,14 @@ export function TicketCard({
   onCancel 
 }: TicketCardProps) {
   return (
-    <Card className='flex flex-col md:flex-row h-full w-full justify-between  max-w-4xl'>
+    <Card className='flex flex-col md:flex-row h-full w-full justify-between items-center max-w-4xl'>
       <div className="absolute" />
       <Image
         width={200}
         height={200}
         src={imageUrl || 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba'}
         alt={title}
-        className="relative z-20 h-full object-cover"
+        className="relative z-20 w-full md:h-full object-cover"
       />
         
       <div className='flex flex-col gap-5 w-full'>
@@ -100,28 +100,27 @@ export function TicketCard({
 
 export function TicketCardSkeleton() {
   return (
-    <Card className='flex flex-col md:flex-row h-full w-full justify-between'>
-      <CardContent>
-        <Skeleton className="h-8 w-full" />
-      </CardContent>
+    <Card className='flex flex-col md:flex-row h-full w-full justify-between items-center max-w-4xl'>
+      <div className="absolute" />
+      <Skeleton className='h-60 w-1/4'/>
+        
+      <div className='flex flex-col gap-5 w-full'>
+        <CardContent className='flex flex-col gap-3 w-full'>
+          <Skeleton className='h-8 w-3/4'/>
+          <Skeleton className='h-2 w-1/4'/>
+        </CardContent>
 
-      <CardContent className='flex flex-col gap-2'>
-        <Skeleton className="h-5 w-1/4" />
-        <Skeleton className="h-5 w-3/4" />
-      </CardContent>
-
-      <CardContent className='flex flex-col gap-1'>
-        <div className='flex items-center gap-2 justify-between'>
-          <Skeleton className="h-5 w-2/3" />
-        </div>
-      </CardContent>
-
-      <CardContent className='flex w-full justify-center'>
-        <Skeleton className="h-10 w-4/5" />
-      </CardContent>
-
-      <CardContent className='flex gap-1 w-full justify-center'>
-        <Skeleton className="h-50 w-3/4" />
+        <CardContent className='flex flex-col gap-2 w-full'>
+          <Skeleton className='h-4 w-2/4' />
+          <Skeleton className='h-4 w-2/4' />
+          <div className='flex items-center gap-2'>
+            <Skeleton className='h-4 w-2/4' />
+          </div>
+        </CardContent>
+      </div>
+      
+      <CardContent className='w-full flex items-center justify-center'>
+        <Skeleton className='h-50 w-50'/>
       </CardContent>
     </Card>
   )
