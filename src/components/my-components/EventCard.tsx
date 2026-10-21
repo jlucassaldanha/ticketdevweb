@@ -47,7 +47,7 @@ export function EventCard({ event, gateBanner, isOrganizerBanner, onDelete, isDe
           height={200}
           src={event.imageUrl || 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba'}
           alt={event.title}
-          className="relative z-20 w-full object-cover aspect-square"
+          className="relative z-20 w-full object-cover"
         />
 
         <CardHeader className='flex flex-col gap-2'>    

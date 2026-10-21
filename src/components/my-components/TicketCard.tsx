@@ -37,15 +37,13 @@ export function TicketCard({
   return (
     <Card className='flex flex-col h-full w-full justify-between'>
       <div className='flex flex-col md:flex-row h-full w-full justify-between gap-3'>
-        <div className='relative w-full'>
-          <Image
+        <Image
             width={200}
             height={200}
             src={imageUrl}
             alt={title}
-            className="relative z-20 w-full object-cover aspect-video"
+            className="relative z-20 h-full object-cover"
           />
-        </div>
         <div className='flex flex-col gap-5 w-full'>
           <CardContent className='flex flex-col gap-3 w-full'>
             <CardTitle className='font-extrabold text-2xl'>{title}</CardTitle>
