@@ -8,13 +8,13 @@ export function TMDBMovieCard({ movie, onSelectMovie }: { movie: TMDbMovie, onSe
     <Card 
       className='flex flex-col md:flex-row items-center overflow-hidden w-full hover:cursor-pointer hover:bg-accent/75' 
       onClick={() => onSelectMovie(movie)}>
-      <div className='relative w-40 h-40 shrink-0'>
+      <div className='relative '>
         <Image
           width={200}
           height={200}
           src={`https://image.tmdb.org/t/p/w200${movie.poster_path}` || 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba'}
           alt={movie.title}
-          className="relative z-20 w-full object-cover aspect-square"
+          className="relative z-20 w-full object-cover"
         />
       </div>
       
