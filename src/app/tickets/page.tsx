@@ -27,9 +27,7 @@ export default function TicketsPage() {
     errorCancel,
     cancelTicket,
     handleShareTicket
-   } = useTickets()
-
-   console.log(tickets)
+  } = useTickets()
 
   return (
     <div className='flex flex-col gap-5 justify-center items-center p-5'>
@@ -46,7 +44,7 @@ export default function TicketsPage() {
 
       <div className='w-full'>
         {isPending && (
-          <div className='grid grid-cols-1 lg:grid-cols-2 gap-5'>
+          <div className='grid grid-cols-1 gap-5'>
             <TicketCardSkeleton />
             <TicketCardSkeleton />
             <TicketCardSkeleton />

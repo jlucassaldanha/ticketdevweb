@@ -5,7 +5,7 @@ import { Skeleton } from '../ui/skeleton';
 import { Badge } from '../ui/badge';
 import Image from 'next/image';
 import { Button } from '../ui/button';
-import { Share2Icon, TicketMinus, TicketX } from 'lucide-react';
+import { Loader2Icon, Share2Icon, TicketMinus, TicketX, TrashIcon } from 'lucide-react';
 
 interface TicketCardProps {
   title: string;
@@ -35,60 +35,62 @@ export function TicketCard({
   onCancel 
 }: TicketCardProps) {
   return (
-    <Card className='flex flex-col h-full w-full justify-between'>
-      <div className='flex flex-col md:flex-row h-full w-full justify-between gap-3'>
-        <Image
-            width={200}
-            height={200}
-            src={imageUrl}
-            alt={title}
-            className="relative z-20 h-full object-cover"
-          />
-        <div className='flex flex-col gap-5 w-full'>
-          <CardContent className='flex flex-col gap-3 w-full'>
-            <CardTitle className='font-extrabold text-2xl'>{title}</CardTitle>
-            <Badge variant={status === 'Ativo' ? 'default' : status === 'Cancelado' ? 'destructive' : 'secondary'}>{status}</Badge>
-          </CardContent>
-
-          <CardContent className='flex flex-col gap-2 w-full'>
-            <EventDate date={date} />
-            <EventLocation location={location} />
-            <div className='flex items-center gap-2'>
-              <span>Lugar:</span>
-              <span>{seat}</span>
-            </div>
-          </CardContent>
-        </div>
+    <Card className='flex flex-col md:flex-row h-full w-full justify-between  max-w-4xl'>
+      <div className="absolute" />
+      <Image
+        width={200}
+        height={200}
+        src={imageUrl || 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba'}
+        alt={title}
+        className="relative z-20 h-full object-cover"
+      />
         
+      <div className='flex flex-col gap-5 w-full'>
+        <CardContent className='flex flex-col gap-3 w-full'>
+          <CardTitle className='font-extrabold text-2xl'>{title}</CardTitle>
+          <Badge variant={status === 'Ativo' ? 'default' : status === 'Cancelado' ? 'destructive' : 'secondary'}>{status}</Badge>
+        </CardContent>
 
-        <CardContent className='w-full flex items-center justify-center'>
-          {status === 'Cancelado' ? (
-            <div className='text-destructive flex flex-col items-center'>
-              <TicketX size={150} />
-              <span className='font-bold'>INGRESSO CANCELADO</span>
-            </div>
-          ) : status === 'Utilizado' ? (
-            <div className='flex flex-col items-center text-secondary'>
-              <TicketMinus size={150} />
-              <span className='font-bold'>INGRESSO UTILIZADO</span>
-            </div>
-          ) : (
-            <Image
-              className='items-center justify-center aspect-square' 
-              src={qrUrl}
-              alt='QR Code'
-              width={150}
-              height={150}
-            />
-          )}
+        <CardContent className='flex flex-col gap-2 w-full'>
+          <EventDate date={date} />
+          <EventLocation location={location} />
+          <div className='flex items-center gap-2'>
+            <span>Lugar:</span>
+            <span>{seat}</span>
+          </div>
         </CardContent>
       </div>
       
+
+      <CardContent className='w-full flex items-center justify-center'>
+        {status === 'Cancelado' ? (
+          <div className='text-destructive flex flex-col items-center'>
+            <TicketX size={150} />
+            <span className='font-bold'>INGRESSO CANCELADO</span>
+          </div>
+        ) : status === 'Utilizado' ? (
+          <div className='flex flex-col items-center text-secondary'>
+            <TicketMinus size={150} />
+            <span className='font-bold'>INGRESSO UTILIZADO</span>
+          </div>
+        ) : (
+          <Image
+            className='items-center justify-center aspect-square' 
+            src={qrUrl}
+            alt='QR Code'
+            width={150}
+            height={150}
+          />
+        )}
+      </CardContent>
+      
       {status !== 'Cancelado' && status !== 'Utilizado' && !isShared && (
-        <CardFooter className='w-full'>
-          <div className='w-full flex justify-center gap-5'>
+        <CardFooter>
+          <div className='w-full flex md:flex-col justify-center gap-5'>
             <Button onClick={onShare}><Share2Icon /></Button>
-            <Button variant="destructive" onClick={onCancel} disabled={isLoadingCancel}>{isLoadingCancel ? "Cancelando..." : "Cancelar compra"}</Button>
+            <Button variant="destructive" onClick={onCancel} disabled={isLoadingCancel}>
+              {isLoadingCancel ? <Loader2Icon className='animate-spin'/> : <TrashIcon /> }
+            </Button>
           </div>
         </CardFooter>
       )}
