@@ -31,7 +31,7 @@ export default function RegisterPage() {
 
   return (
     <div className='flex flex-col justify-center items-center h-screen gap-5'>
-      <div>
+      <div className='text-2xl'>
         <LogoTicketDev />
       </div>
 
