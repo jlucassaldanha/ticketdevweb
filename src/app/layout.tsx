@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { getTokenAndDataAction } from '@/actions/auth';
 import AppProvider from './providers';
 import Header from '@/components/my-components/Header';
+import Footer from '@/components/my-components/Footer';
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
@@ -36,6 +37,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         <AppProvider user={user} token={token}>
           <Header />
           {children}
+          <Footer />
         </AppProvider>
       </body>
     </html>
