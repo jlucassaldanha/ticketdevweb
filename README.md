@@ -1,6 +1,10 @@
-# 🎟️ TicketDevWeb
+# 🎨 TicketDevWebApp 
 
 Este é o repositório do **Front-End da TicketDev**, uma plataforma de venda, gerenciamento e validação de ingressos de cinema.
+
+O projeto foi construído em **Next.js (App Router)** utilizando o **Material UI (MUI v6)** como biblioteca de componentes de design.
+
+Pode acessar o projeto em produção por aqui: [TicketDevWeb](https://ticketdevweb.vercel.app)
 
 Ele consome a API Rest construída em Node que esta em produção em [TicketDevApi](https://ticketdevapi.onrender.com/api-docs), e o repositório em [TicketDevApiRepo](https://github.com/jlucassaldanha/ticketdevapi) 
 
@@ -9,22 +13,6 @@ Ele consome a API Rest construída em Node que esta em produção em [TicketDevA
 Devido a aplicação em produção estar publicada na plataforma Render utilizando o Free Tier, há certa lentidão no primeiro acesso após um tempo de inatividade.
 
 ---
-## Aviso sobre construção
-
-Este projeto ainda esta em construção, por isso não se assuste caso bata de frente com uma página incompleta ou que não existe.
-
----
-
-## 🚀 Tecnologias e Stack
-
-O projeto foi construído utilizando as melhores práticas e ferramentas do ecossistema React/Next.js moderno:
-
-* **Framework:** [Next.js](https://nextjs.org/) (App Router & Server Actions)
-* **Gerenciamento de Estado & Cache:** [TanStack Query (React Query)](https://tanstack.com/query)
-* **Estilização:** [Tailwind CSS](https://tailwindcss.com/)
-* **Componentes de UI:** [Shadcn UI](https://ui.shadcn.com/) / Base UI
-* **Validação de Formulários:** Zod & React Hook Form
-* **Linguagem:** TypeScript
 
 ## 🚀 Como Executar o Front-End
 
@@ -53,3 +41,33 @@ O projeto foi construído utilizando as melhores práticas e ferramentas do ecos
 O front-end estará disponível em: **`http://localhost:3000`** ou **`http://localhost:3001`**
 
 ---
+
+## 🏗️ Decisões Arquiteturais e Engenharia de UI
+
+Buscando o nível máximo de maturidade técnica e evitando layouts genéricos (*AI slop*), as seguintes escolhas de design e arquitetura de software foram aplicadas no cliente:
+
+### 1. Injeção de Contexto de Autenticação e Rotas Protegidas (`ProtectedRoute`)
+Toda a segurança de rotas é baseada em funções (*Role-Based Access Control*).
+*   **Como funciona:** O `AuthContext` gerencia o estado do usuário logado e armazena de forma persistente o token JWT no `localStorage`.
+*   **Proteção Ativa:** O componente `<ProtectedRoute>` envolve as páginas críticas (como `/organizador` e `/portaria`). Se um usuário com cargo de `CLIENTE` tentar forçar a URL da portaria, o sistema detecta a incompatibilidade de cargo em tempo de execução e o redireciona automaticamente para o catálogo com segurança.
+
+### 2. Mapa de Assentos Interativo com Controle Concorrente
+No fluxo de checkout, implementamos uma matriz interativa de seleção de poltronas baseada em poltronas de cinema (`A1` a `J10`).
+*   **Prevenção de Cliques Inválidos:** O front-end carrega dinamicamente a lista de ingressos já vendidos para aquela sessão e desabilita fisicamente o clique em qualquer poltrona ocupada, reduzindo requisições desnecessárias ao servidor.
+
+### 3. Portaria Mobile-First com Scanner de Câmera Real (`html5-qrcode`)
+A portaria digital foi desenhada para operação real no celular de um funcionário do evento.
+*   **Uso de Câmera e Prevenção de Loops:** Integramos a biblioteca `html5-qrcode` com foco estrito de performance. A inicialização e a parada física da câmera são coordenadas dentro do ciclo de vida do React (`useEffect` e referências `useRef`), evitando vazamentos de memória ou loops de re-renderização infinitos no React 19.
+*   **Múltiplos Status Visuais (Feedbacks Gigantes):** Conforme exigido pelo edital, o operador é impactado por uma tela cheia colorida em 4 variações dinâmicas que garantem agilidade na fila de entrada:
+    *   **VALID:** Verde vibrante para ingressos válidos (libera a catraca).
+    *   **ALREADY_USED:** Amarelo de alerta de fraude para ingressos duplicados.
+    *   **WRONG_EVENT:** Azul informativo se o cliente estiver na fila do filme errado.
+    *   **INVALID:** Vermelho de erro caso o QR Code seja violado ou falso.
+
+---
+
+## 🤖 Declaração de Uso de IA (Transparência & Escopo)
+
+Em conformidade com as regras de transparência de engenharia do edital do desafio:
+*   **O Desenvolvedor como Arquiteto:** Todas as regras de negócio de checkout, controle de estado de assentos, layout da portaria, fluxo de cancelamento de ingressos e o design do painel do organizador foram concebidos e digitados pelo candidato.
+*   **A IA como Pair Programmer:** A IA foi utilizada de forma construtiva como suporte técnico ágil, especificamente auxiliando na resolução de quebras de tipagem do TypeScript durante a transição do MUI v5 para o MUI v6 e no ajuste das referências do scanner de câmera sob o ciclo de vida do React 19.
