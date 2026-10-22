@@ -28,8 +28,6 @@ export function EventCard({ event, gateBanner, isOrganizerBanner, onDelete, isDe
 
   const isDisabled = Boolean(isOrganizerBanner);
 
-  console.log(event)
-
   return (
     <Link 
       href={href} 
