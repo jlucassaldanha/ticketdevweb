@@ -64,6 +64,12 @@ export default function TicketsPage() {
         </div>
       )}
 
+      <div>
+        {tickets.length === 0 && (
+          <span>Você ainda não possui ingressos.</span>
+        )}
+      </div>
+
       <div className='grid grid-cols-1 gap-5 w-full items-center justify-center'>
         {tickets.map((ticket) => (
           <div key={ticket.id} className='flex flex-col h-full w-full items-center justify-center'>
