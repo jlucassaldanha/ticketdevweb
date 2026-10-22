@@ -66,7 +66,7 @@ export default function CheckoutPage() {
               date={new Date(event.date).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
               location={event.location || "Location"}
               seat={seat || "Nenhum"}
-              price={event.price.toFixed(2).toString().replace('.', ',') || "0,00"}
+              price={Number(event.price).toFixed(2).toString().replace('.', ',') || "0,00"}
             />
           )}
         </div>

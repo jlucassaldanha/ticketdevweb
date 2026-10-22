@@ -28,6 +28,8 @@ export function EventCard({ event, gateBanner, isOrganizerBanner, onDelete, isDe
 
   const isDisabled = Boolean(isOrganizerBanner);
 
+  console.log(event)
+
   return (
     <Link 
       href={href} 
@@ -78,7 +80,7 @@ export function EventCard({ event, gateBanner, isOrganizerBanner, onDelete, isDe
         
         {!gateBanner && (
           <CardContent className='flex items-center justify-center text-primary'>
-            <span className='font-bold text-lg'>R$ {event.price.toFixed(2).replace('.', ',')}</span>
+            <span className='font-bold text-lg'>R$ {Number(event.price).toFixed(2).replace('.', ',')}</span>
           </CardContent>
         )}
 
