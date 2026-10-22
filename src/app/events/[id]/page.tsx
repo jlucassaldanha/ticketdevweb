@@ -79,7 +79,7 @@ export default function EventPage() {
               location={event.location || "Location"}
               seat={selectedSeat || "Nenhum"}
               price={
-                event.price.toFixed(2).toString().replace(".", ",") || "0,00"
+                Number(event.price).toFixed(2).toString().replace(".", ",") || "0,00"
               }
             />
           )}

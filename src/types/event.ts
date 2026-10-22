@@ -11,6 +11,6 @@ export interface TicketEvent {
   date: string
   location: string
   capacity: number
-  price: number
+  price: string
   tickets?: Ticket[]
 }

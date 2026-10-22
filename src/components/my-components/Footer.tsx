@@ -8,12 +8,12 @@ export default function Footer() {
     <footer className="w-full border-t border-border/40 bg-card/20 py-8 px-4 md:px-10 mt-auto flex flex-col md:flex-row">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
         <div className="flex flex-col gap-1">
-          <p className="text-sm font-semibold text-foreground flex gap-2">
+          <div className="text-sm font-semibold text-foreground flex gap-2">
             <LogoTicketDev /> <span>•</span> Todos os direitos reservados.
-          </p>
-          <p className="text-xs text-muted-foreground">
+          </div>
+          <div className="text-xs text-muted-foreground">
             © {currentYear} Feito por <Link href="https://github.com/jlucassaldanha" className='text-cyan'>João Lucas</Link>.
-          </p>
+          </div>
         </div>
       </div>
 
